@@ -21,17 +21,17 @@ BASE_NETLIFY = 'https://storied-alfajores-6f10d2.netlify.app/'
 TIER = {
     'math': 'full', 'maslul': 'full', 'teshuva': 'full', 'signallab': 'full',
     'hashem': 'full', 'aiterminals': 'full',
-    'idcheck': 'works', 'trends': 'works', 'polygraph': 'works',
+    'mishnat': 'full', 'dapor': 'full', 'idcheck': 'full', 'leads': 'full',
+    'yomi': 'full', 'trends': 'full', 'polygraph': 'full', 'greenhouse': 'full',
     'money': 'works', 'rct': 'works', 'patlasgames': 'works', 'kidsgames': 'works',
-    'shofar': 'works', 'greenhouse': 'works', 'pizza': 'works', 'palette': 'works',
+    'shofar': 'works', 'pizza': 'works', 'palette': 'works',
     'cyberos': 'works', 'bridgeos': 'works', 'recentfiles': 'works',
     'csslib': 'works', 'codemap': 'works', 'echo': 'works', 'phish': 'works',
     'codesplit': 'works', 'codeauth': 'works', 'cablevitality': 'works',
-    'yomi': 'works', 'leads': 'works',
     'etrog': 'works', 'emotion': 'works', 'cables': 'works', 'breath': 'works',
     'dapor-schedule': 'works', 'codekids': 'works', 'crmgen': 'works', 'emailplus': 'works',
     # works — דמו מלא / פרוטוטייפ אינטראקטיבי עובד
-    'mishnat': 'works', 'budget': 'works', 'mahat': 'works', 'dapor': 'works',
+    'budget': 'works', 'mahat': 'works',
     'mltrain': 'works', 'digibook': 'works', 'etrog-studio': 'works',
     'green-farm': 'works', 'diykids': 'works',
 }
@@ -518,6 +518,8 @@ header p{{color:var(--muted);font-size:1rem}}
 .wip-banner{{margin-bottom:22px;padding:14px 18px;border-radius:16px;border:1px solid rgba(96,165,250,.35);background:rgba(96,165,250,.08);display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}}
 .wip-banner p{{font-size:.88rem;color:var(--muted);flex:1;min-width:200px}}
 .wip-banner b{{color:#93c5fd}}
+.wip-banner.ok-banner{{border-color:rgba(34,197,94,.35);background:rgba(34,197,94,.08)}}
+.wip-banner.ok-banner b{{color:#86efac}}
 .frow{{display:flex;gap:14px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x mandatory}}
 .fcard{{flex:0 0 260px;scroll-snap-align:start;background:var(--surface);border:2px solid rgba(34,197,94,.35);
   border-radius:16px;overflow:hidden;cursor:pointer;transition:.2s}}
@@ -919,24 +921,38 @@ function render() {{
 
 function renderWipBanner() {{
   const wip = DATA.filter(r => r.tier === 'wip');
+  const broken = DATA.filter(r => r.tier === 'broken');
+  const demo = DATA.filter(r => r.tier === 'demo');
   const el = document.getElementById('wipBanner');
-  if (!wip.length) {{ el.hidden = true; el.innerHTML = ''; return; }}
-  el.hidden = false;
-  const names = wip.slice(0, 4).map(r => r.icon + ' ' + r.name).join(' · ');
-  const more = wip.length > 4 ? ' +' + (wip.length - 4) + ' נוספים' : '';
-  el.innerHTML = `<p><b>🔵 ${{wip.length}} בפיתוח</b> — דורשים עבודה לפני שמסמנים כ"עובד": ${{names}}${{more}}</p>
-    <button type="button" class="btn btn-ghost" id="wipFilterBtn">הצג רק בפיתוח</button>`;
-  document.getElementById('wipFilterBtn').onclick = () => {{
-    filter = 'wip';
-    renderChips();
-    renderCatChips();
-    render();
-    document.getElementById('grid').scrollIntoView({{ behavior: 'smooth', block: 'start' }});
-  }};
+  el.classList.remove('ok-banner');
+  if (wip.length) {{
+    el.hidden = false;
+    const names = wip.slice(0, 4).map(r => r.icon + ' ' + r.name).join(' · ');
+    const more = wip.length > 4 ? ' +' + (wip.length - 4) + ' נוספים' : '';
+    el.innerHTML = `<p><b>🔵 ${{wip.length}} בפיתוח</b> — דורשים עבודה לפני שמסמנים כ"עובד": ${{names}}${{more}}</p>
+      <button type="button" class="btn btn-ghost" id="wipFilterBtn">הצג רק בפיתוח</button>`;
+    document.getElementById('wipFilterBtn').onclick = () => {{
+      filter = 'wip';
+      renderChips();
+      renderCatChips();
+      render();
+      document.getElementById('grid').scrollIntoView({{ behavior: 'smooth', block: 'start' }});
+    }};
+    return;
+  }}
+  if (!broken.length && !demo.length) {{
+    el.hidden = false;
+    el.classList.add('ok-banner');
+    const full = DATA.filter(r => r.tier === 'full').length;
+    el.innerHTML = `<p><b>🎉 מצב מעולה</b> — ${{DATA.length}}/${{DATA.length}} פרויקטים פעילים · ${{full}} עובדים מלא · 0 שבורים</p>`;
+    return;
+  }}
+  el.hidden = true;
+  el.innerHTML = '';
 }}
 
 function renderFeatured() {{
-  const top = DATA.filter(r => r.tier === 'full').slice(0, 6);
+  const top = DATA.filter(r => r.tier === 'full').slice(0, 9);
   document.getElementById('featured').innerHTML = top.length ? `
     <h2>⭐ פרויקטים מובילים — עובדים מלא</h2>
     <div class="frow">${{top.map(r => `

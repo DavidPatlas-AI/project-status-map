@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-01T20:17:20",
+  "updated": "2026-07-01T20:34:09",
   "projects": {
     "aiterminals": {
       "http": 200,
@@ -13,16 +13,46 @@
       "url": "https://davidpatlas-ai.github.io/signal-lab/",
       "httpErr": "ok"
     },
+    "yomi": {
+      "http": 200,
+      "tier": "full",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/adhd_home/",
+      "httpErr": "ok"
+    },
     "teshuva": {
       "http": 200,
       "tier": "full",
       "url": "https://teshuva-algorithm.netlify.app",
       "httpErr": "ok"
     },
+    "greenhouse": {
+      "http": 200,
+      "tier": "full",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%97%D7%9E%D7%9E%D7%94%20%D7%93%D7%99%D7%92%D7%99%D7%98%D7%9C%D7%99%D7%AA/index.html",
+      "httpErr": "ok"
+    },
+    "leads": {
+      "http": 200,
+      "tier": "full",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%9C%D7%99%D7%93%D7%99%D7%9D%20%D7%9E%D7%92%D7%99%D7%91%D7%95%D7%99%20%D7%95%D7%95%D7%A6%D7%90%D7%A4/project_gallery.html",
+      "httpErr": "ok"
+    },
     "maslul": {
       "http": 200,
       "tier": "full",
       "url": "https://maslul-rechev-2026.netlify.app",
+      "httpErr": "ok"
+    },
+    "trends": {
+      "http": 200,
+      "tier": "full",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%99%D7%A6%D7%99%D7%A8%D7%AA%20%D7%AA%D7%95%D7%9B%D7%9F%20%D7%95%D7%99%D7%A8%D7%90%D7%9C%D7%99%20%D7%9C%D7%A4%D7%99%20%D7%98%D7%A8%D7%A0%D7%93%D7%99%D7%9D/index.html",
+      "httpErr": "ok"
+    },
+    "idcheck": {
+      "http": 200,
+      "tier": "full",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/ID%20%D7%9E%D7%A4%D7%A2%D7%A0%D7%97%20%D7%95%D7%91%D7%95%D7%93%D7%A7/index.html",
       "httpErr": "ok"
     },
     "math": {
@@ -35,6 +65,24 @@
       "http": 200,
       "tier": "full",
       "url": "https://genuine-cobbler-8783c8.netlify.app/",
+      "httpErr": "ok"
+    },
+    "polygraph": {
+      "http": 200,
+      "tier": "full",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%A4%D7%95%D7%9C%D7%99%D7%92%D7%A8%D7%A3%20%D7%93%D7%99%D7%92%D7%99%D7%98%D7%9C%D7%99/index.html",
+      "httpErr": "ok"
+    },
+    "mishnat": {
+      "http": 200,
+      "tier": "full",
+      "url": "https://mishnat-yosef-dashboard.netlify.app/",
+      "httpErr": "ok"
+    },
+    "dapor": {
+      "http": 200,
+      "tier": "full",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%9E%D7%91%D7%97%D7%9F%20%D7%93%D7%A4%D7%A8/gallery.html",
       "httpErr": "ok"
     },
     "bridgeos": {
@@ -53,12 +101,6 @@
       "http": 200,
       "tier": "works",
       "url": "https://storied-alfajores-6f10d2.netlify.app/CyberOS/index.html",
-      "httpErr": "ok"
-    },
-    "yomi": {
-      "http": 200,
-      "tier": "works",
-      "url": "https://storied-alfajores-6f10d2.netlify.app/adhd_home/",
       "httpErr": "ok"
     },
     "csslib": {
@@ -89,18 +131,6 @@
       "http": 200,
       "tier": "works",
       "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%94%D7%A4%D7%9C%D7%98%D7%94%20%D7%A9%D7%9C%20%D7%A4%D7%98%D7%9C%D7%A1/index.html",
-      "httpErr": "ok"
-    },
-    "greenhouse": {
-      "http": 200,
-      "tier": "works",
-      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%97%D7%9E%D7%9E%D7%94%20%D7%93%D7%99%D7%92%D7%99%D7%98%D7%9C%D7%99%D7%AA/index.html",
-      "httpErr": "ok"
-    },
-    "leads": {
-      "http": 200,
-      "tier": "works",
-      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%9C%D7%99%D7%93%D7%99%D7%9D%20%D7%9E%D7%92%D7%99%D7%91%D7%95%D7%99%20%D7%95%D7%95%D7%A6%D7%90%D7%A4/project_gallery.html",
       "httpErr": "ok"
     },
     "emotion": {
@@ -139,22 +169,10 @@
       "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%9E%D6%B0%D7%A0%D6%B7%D7%AA%D6%B5%D6%BC%D7%97%D6%B7%20%D7%A7%D7%95%D6%B9%D7%93%20%D7%90%D6%B2%D7%9E%D6%B4%D7%AA%D6%B4%D6%BC%D7%99/final_kids_decoder.html",
       "httpErr": "ok"
     },
-    "trends": {
-      "http": 200,
-      "tier": "works",
-      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%99%D7%A6%D7%99%D7%A8%D7%AA%20%D7%AA%D7%95%D7%9B%D7%9F%20%D7%95%D7%99%D7%A8%D7%90%D7%9C%D7%99%20%D7%9C%D7%A4%D7%99%20%D7%98%D7%A8%D7%A0%D7%93%D7%99%D7%9D/index.html",
-      "httpErr": "ok"
-    },
     "codesplit": {
       "http": 200,
       "tier": "works",
       "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%9E%D7%A4%D7%A6%D7%9C%20%D7%A7%D7%95%D7%93%20%D7%9E%D7%A7%D7%9C%D7%95%D7%93/index.html",
-      "httpErr": "ok"
-    },
-    "idcheck": {
-      "http": 200,
-      "tier": "works",
-      "url": "https://storied-alfajores-6f10d2.netlify.app/ID%20%D7%9E%D7%A4%D7%A2%D7%A0%D7%97%20%D7%95%D7%91%D7%95%D7%93%D7%A7/index.html",
       "httpErr": "ok"
     },
     "cables": {
@@ -173,12 +191,6 @@
       "http": 200,
       "tier": "works",
       "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%91%D7%95%D7%A0%D7%94%20%D7%A4%D7%90%D7%A8%D7%A7%20%D7%A9%D7%A2%D7%A9%D7%95%D7%A2%D7%99%D7%9D/index.html",
-      "httpErr": "ok"
-    },
-    "polygraph": {
-      "http": 200,
-      "tier": "works",
-      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%A4%D7%95%D7%9C%D7%99%D7%92%D7%A8%D7%A3%20%D7%93%D7%99%D7%92%D7%99%D7%98%D7%9C%D7%99/index.html",
       "httpErr": "ok"
     },
     "patlasgames": {
@@ -220,61 +232,49 @@
     "diykids": {
       "http": 200,
       "tier": "works",
-      "url": "https://storied-alfajores-6f10d2.netlify.app/wip-diykids/index.html",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/diykids/index.html",
       "httpErr": "ok"
     },
     "green-farm": {
       "http": 200,
       "tier": "works",
-      "url": "https://storied-alfajores-6f10d2.netlify.app/wip-green-farm/index.html",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/green-farm/index.html",
       "httpErr": "ok"
     },
     "etrog-studio": {
       "http": 200,
       "tier": "works",
-      "url": "https://storied-alfajores-6f10d2.netlify.app/wip-etrog-studio/index.html",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/etrog-studio/index.html",
       "httpErr": "ok"
     },
     "mltrain": {
       "http": 200,
       "tier": "works",
-      "url": "https://storied-alfajores-6f10d2.netlify.app/wip-mltrain/index.html",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/mltrain/index.html",
       "httpErr": "ok"
     },
     "budget": {
       "http": 200,
       "tier": "works",
-      "url": "https://storied-alfajores-6f10d2.netlify.app/wip-budget/index.html",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/budget/index.html",
       "httpErr": "ok"
     },
     "digibook": {
       "http": 200,
       "tier": "works",
-      "url": "https://storied-alfajores-6f10d2.netlify.app/wip-digibook/index.html",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/digibook/index.html",
       "httpErr": "ok"
     },
     "mahat": {
       "http": 200,
       "tier": "works",
-      "url": "https://storied-alfajores-6f10d2.netlify.app/wip-mahat/index.html",
-      "httpErr": "ok"
-    },
-    "mishnat": {
-      "http": 200,
-      "tier": "works",
-      "url": "https://mishnat-yosef-dashboard.netlify.app/",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/mahat/index.html",
       "httpErr": "ok"
     },
     "dapor-schedule": {
       "http": 200,
       "tier": "works",
       "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C_%D7%9E%D7%9C%D7%90_%D7%9E%D7%A4%D7%95%D7%A6%D7%A5/gallery.html",
-      "httpErr": "ok"
-    },
-    "dapor": {
-      "http": 200,
-      "tier": "works",
-      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%9E%D7%91%D7%97%D7%9F%20%D7%93%D7%A4%D7%A8/gallery.html",
       "httpErr": "ok"
     }
   }
