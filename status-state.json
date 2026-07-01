@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-01T19:24:45",
+  "updated": "2026-07-01T19:39:07",
   "projects": {
     "aiterminals": {
       "http": 200,
@@ -67,12 +67,6 @@
       "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%A2%D7%99%D7%A6%D7%95%D7%91%D7%99%D7%9D%20CSS/gallery.html",
       "httpErr": "ok"
     },
-    "dapor": {
-      "http": 200,
-      "tier": "works",
-      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%9E%D7%91%D7%97%D7%9F%20%D7%93%D7%A4%D7%A8/gallery.html",
-      "httpErr": "ok"
-    },
     "etrog": {
       "http": 200,
       "tier": "works",
@@ -96,12 +90,6 @@
       "tier": "works",
       "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%94%D7%A4%D7%9C%D7%98%D7%94%20%D7%A9%D7%9C%20%D7%A4%D7%98%D7%9C%D7%A1/index.html",
       "httpErr": "ok"
-    },
-    "green-farm": {
-      "http": null,
-      "tier": "works",
-      "url": "https://storied-alfajores-6f10d2.netlify.app/wip-green-farm/index.html",
-      "httpErr": "contact"
     },
     "greenhouse": {
       "http": 200,
@@ -151,24 +139,6 @@
       "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%9E%D6%B0%D7%A0%D6%B7%D7%AA%D6%B5%D6%BC%D7%97%D6%B7%20%D7%A7%D7%95%D6%B9%D7%93%20%D7%90%D6%B2%D7%9E%D6%B4%D7%AA%D6%B4%D6%BC%D7%99/final_kids_decoder.html",
       "httpErr": "ok"
     },
-    "dapor-schedule": {
-      "http": 200,
-      "tier": "works",
-      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C_%D7%9E%D7%9C%D7%90_%D7%9E%D7%A4%D7%95%D7%A6%D7%A5/gallery.html",
-      "httpErr": "ok"
-    },
-    "diykids": {
-      "http": null,
-      "tier": "works",
-      "url": "https://storied-alfajores-6f10d2.netlify.app/wip-diykids/index.html",
-      "httpErr": "contact"
-    },
-    "mltrain": {
-      "http": null,
-      "tier": "works",
-      "url": "https://storied-alfajores-6f10d2.netlify.app/wip-mltrain/index.html",
-      "httpErr": "contact"
-    },
     "trends": {
       "http": 200,
       "tier": "works",
@@ -199,24 +169,6 @@
       "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%9E%D7%A9%D7%97%D7%A7%D7%99%D7%9D%20%D7%9C%D7%99%D7%9C%D7%93%D7%99%D7%9D/index.html",
       "httpErr": "ok"
     },
-    "budget": {
-      "http": null,
-      "tier": "works",
-      "url": "https://storied-alfajores-6f10d2.netlify.app/wip-budget/index.html",
-      "httpErr": "contact"
-    },
-    "etrog-studio": {
-      "http": null,
-      "tier": "works",
-      "url": "https://storied-alfajores-6f10d2.netlify.app/wip-etrog-studio/index.html",
-      "httpErr": "contact"
-    },
-    "digibook": {
-      "http": null,
-      "tier": "works",
-      "url": "https://storied-alfajores-6f10d2.netlify.app/wip-digibook/index.html",
-      "httpErr": "contact"
-    },
     "rct": {
       "http": 200,
       "tier": "works",
@@ -240,12 +192,6 @@
       "tier": "works",
       "url": "https://storied-alfajores-6f10d2.netlify.app/RecentFiles/index.html",
       "httpErr": "ok"
-    },
-    "mahat": {
-      "http": null,
-      "tier": "works",
-      "url": "https://storied-alfajores-6f10d2.netlify.app/wip-mahat/index.html",
-      "httpErr": "contact"
     },
     "shofar": {
       "http": 200,
@@ -271,11 +217,65 @@
       "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%A4%D7%99%D7%A6%D7%94/index.html",
       "httpErr": "ok"
     },
+    "dapor-schedule": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C_%D7%9E%D7%9C%D7%90_%D7%9E%D7%A4%D7%95%D7%A6%D7%A5/gallery.html",
+      "httpErr": "ok"
+    },
+    "diykids": {
+      "http": null,
+      "tier": "wip",
+      "url": "",
+      "httpErr": "contact"
+    },
+    "green-farm": {
+      "http": null,
+      "tier": "wip",
+      "url": "",
+      "httpErr": "contact"
+    },
+    "etrog-studio": {
+      "http": null,
+      "tier": "wip",
+      "url": "",
+      "httpErr": "contact"
+    },
+    "mltrain": {
+      "http": null,
+      "tier": "wip",
+      "url": "",
+      "httpErr": "contact"
+    },
+    "budget": {
+      "http": null,
+      "tier": "wip",
+      "url": "",
+      "httpErr": "contact"
+    },
+    "digibook": {
+      "http": null,
+      "tier": "wip",
+      "url": "",
+      "httpErr": "contact"
+    },
+    "mahat": {
+      "http": null,
+      "tier": "wip",
+      "url": "",
+      "httpErr": "contact"
+    },
     "mishnat": {
       "http": null,
       "tier": "wip",
-      "url": "https://github.com/DavidPatlas-AI/mishnat-yosef",
+      "url": "",
       "httpErr": "contact"
+    },
+    "dapor": {
+      "http": 200,
+      "tier": "wip",
+      "url": "",
+      "httpErr": "ok"
     }
   }
 }

@@ -9,8 +9,13 @@
 הפעל בסטארטאפ.bat    → הפעלה אוטומטית עם Windows (ברקע, ללא חלון)
 בטל סטארטאפ.bat      → הסרה מ-Startup
 
+מקור אמת (חובה — לא לבנות ממקור אחר):
+  portfolio.html     → 46 פרויקטים פעילים בתיק
+  רשימות פרויקטים\  → ארכיון 623+ פריטים (D:\) — לא מחליף את portfolio!
+
 scripts/
   build.py           → מייצר את הדף (קורא מ-Desktop\פרויקטים\תיק עבודות\portfolio.html)
+                       מסנכרן גם: status-dashboard.html, תיק עבודות.txt, portfolio-git-temp
   watch.py           → סנכרון אוטומטי — --initial --deploy --debounce 2
   status-state.json  → מצב URL אחרון (להתראות על פרויקטים שנשברו)
   patch_portfolio.py → מוסיף קישור מפת סטטוס לתיק העבודות

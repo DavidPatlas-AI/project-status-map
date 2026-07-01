@@ -10,25 +10,41 @@ PORTFOLIO_DIR = os.path.join(os.path.expanduser('~'), 'Desktop', 'פרויקטי
 PORTFOLIO = os.path.join(PORTFOLIO_DIR, 'portfolio.html')
 OUT_HTML = os.path.join(PROJECT_DIR, 'מפת סטטוס פרויקטים.html')
 OUT_NETLIFY = os.path.join(PORTFOLIO_DIR, 'portfolio-git-temp', 'status-dashboard.html')
+PORTFOLIO_GIT = os.path.join(PORTFOLIO_DIR, 'portfolio-git-temp', 'portfolio.html')
 STATE_FILE = os.path.join(PROJECT_DIR, 'status-state.json')
+LIST_DIR = os.path.join(os.path.expanduser('~'), 'Desktop', 'רשימות פרויקטים')
+LIST_TXT = os.path.join(LIST_DIR, 'תיק עבודות.txt')
+MIN_PROJECTS = 40
 BASE_NETLIFY = 'https://storied-alfajores-6f10d2.netlify.app/'
 
 # Manual quality tier (truth on the ground)
 TIER = {
     'math': 'full', 'maslul': 'full', 'teshuva': 'full', 'signallab': 'full',
-    'hashem': 'full',  # real PWA on genuine-cobbler
-    'idcheck': 'works', 'dapor': 'works', 'trends': 'works', 'polygraph': 'works',
+    'hashem': 'full', 'aiterminals': 'full',
+    'idcheck': 'works', 'trends': 'works', 'polygraph': 'works',
     'money': 'works', 'rct': 'works', 'patlasgames': 'works', 'kidsgames': 'works',
     'shofar': 'works', 'greenhouse': 'works', 'pizza': 'works', 'palette': 'works',
-    'cyberos': 'works', 'bridgeos': 'works', 'recentfiles': 'works', 'aiterminals': 'full',
+    'cyberos': 'works', 'bridgeos': 'works', 'recentfiles': 'works',
     'csslib': 'works', 'codemap': 'works', 'echo': 'works', 'phish': 'works',
-    'codesplit': 'works', 'codeauth': 'works', 'cyberos': 'works', 'cablevitality': 'works',
+    'codesplit': 'works', 'codeauth': 'works', 'cablevitality': 'works',
     'yomi': 'works', 'leads': 'works',
     'etrog': 'works', 'emotion': 'works', 'cables': 'works', 'breath': 'works',
     'dapor-schedule': 'works', 'codekids': 'works', 'crmgen': 'works', 'emailplus': 'works',
-    'mltrain': 'works', 'digibook': 'works', 'budget': 'works', 'etrog-studio': 'works',
-    'green-farm': 'works', 'diykids': 'works', 'mahat': 'works',
-    'mishnat': 'wip',
+    # wip — צריך עוד עבודה / פרוטוטייפ / contact
+    'dapor': 'wip', 'mltrain': 'wip', 'digibook': 'wip', 'budget': 'wip',
+    'etrog-studio': 'wip', 'green-farm': 'wip', 'diykids': 'wip',
+    'mahat': 'wip', 'mishnat': 'wip',
+}
+
+# Sort later within same tier (higher = lower on page)
+SORT_RANK = {
+    'diykids': 88, 'green-farm': 89, 'etrog-studio': 90, 'mltrain': 91,
+    'budget': 92, 'digibook': 93, 'mahat': 94, 'mishnat': 95,
+    'dapor-schedule': 96, 'dapor': 99,
+}
+
+VERSION_URL_FIX = {
+    'dapor': {'מבחן דפר/מבחן דפר/index.html': 'מבחן דפר/index.html'},
 }
 
 TIER_META = {
@@ -210,6 +226,28 @@ def is_dedicated(url):
     return 'storied-alfajores-6f10d2.netlify.app' not in url
 
 
+def resolve_tier(p, http, err, url):
+    if is_url_broken(http, err, url, p.get('contact')):
+        return 'broken'
+    manual = TIER.get(p['id'])
+    if p.get('contact') or p.get('status') == 'wip':
+        if manual in ('wip', 'demo', 'broken'):
+            return manual
+        return 'wip'
+    return manual or 'works'
+
+
+def fix_versions(pid, versions):
+    fixes = VERSION_URL_FIX.get(pid, {})
+    out = []
+    for v in versions:
+        u = v.get('url') or ''
+        if u in fixes:
+            v = dict(v, url=fixes[u])
+        out.append(v)
+    return out
+
+
 def load_prev_state():
     try:
         with open(STATE_FILE, encoding='utf-8') as f:
@@ -328,26 +366,24 @@ def build_rows(catalog):
             http, err = 200, 'local-only'
         else:
             http, err = checks.get(p['id'], (None, 'contact' if p.get('contact') else 'no-url'))
-        tier = TIER.get(p['id'], 'works')
-        if is_url_broken(http, err, url, p.get('contact')):
-            tier = 'broken'
-        elif p.get('contact') or p['status'] == 'wip':
-            tier = TIER.get(p['id'], 'wip')
+        tier = resolve_tier(p, http, err, url)
         preview = p.get('preview') or PREVIEWS.get(p['id'])
         h, h2, s = theme_for(p)
         if not preview:
             preview = svg_cover(p['id'], p['icon'], h, h2, s)
-        versions = p.get('versions') or []
+        versions = fix_versions(p['id'], p.get('versions') or [])
+        demo_url = '' if tier == 'wip' else (url or '')
         prepared.append({
             'id': p['id'], 'name': p['name'], 'desc': p['desc'], 'icon': p['icon'],
             'tier': tier, 'tierLabel': TIER_META[tier]['label'], 'tierColor': TIER_META[tier]['color'],
             'tierIcon': TIER_META[tier]['icon'], 'tierOrder': TIER_META[tier]['order'],
-            'url': url or '', 'http': http, 'httpErr': err,
+            'url': demo_url, 'demoUrl': url or '', 'http': http, 'httpErr': err,
             'preview': preview, 'gh': p.get('gh') or '', 'cats': p['cat'],
             'dedicated': is_dedicated(url), 'contact': bool(p.get('contact')),
             'versCount': len(versions), 'versions': versions,
+            'sortRank': SORT_RANK.get(p['id'], 0),
         })
-    prepared.sort(key=lambda r: (r['tierOrder'], r['name']))
+    prepared.sort(key=lambda r: (r['tierOrder'], r['sortRank'], r['name']))
     return prepared
 
 
@@ -590,9 +626,14 @@ function catLabel(c){{ return CAT_LABELS[c] || c; }}
 const BASE = {json.dumps(BASE_NETLIFY, ensure_ascii=False)};
 
 function effectiveUrl(r) {{
-  const u = r.url || '';
+  if (r.tier === 'wip' || r.contact) return r.gh || '';
+  const u = r.url || r.demoUrl || '';
   if (u && !u.includes('http%3A') && !u.includes('.netlify.app/https')) return u;
   return r.gh || u;
+}}
+
+function previewUrl(r) {{
+  return r.demoUrl || r.url || '';
 }}
 
 function resolveVersionUrl(p, v) {{
@@ -616,9 +657,12 @@ function openVersions(id) {{
   document.getElementById('versTitle').textContent = p.icon + ' ' + p.name;
   const actions = document.getElementById('versActions');
   const live = effectiveUrl(p);
-  actions.innerHTML = [
-    live ? `<a class="btn btn-primary" href="${{esc(live)}}" target="_blank" rel="noopener">פתח נוכחי</a>` : '',
-    p.gh ? `<a class="btn btn-ghost" href="${{esc(p.gh)}}" target="_blank" rel="noopener">GitHub</a>` : ''
+  const demo = previewUrl(p);
+  const wipNote = (p.tier === 'wip') ? '<span class="tag" style="margin:0">🔵 בפיתוח — כפתור פתח מוביל ל-GitHub</span>' : '';
+  actions.innerHTML = wipNote + [
+    live ? `<a class="btn btn-primary" href="${{esc(live)}}" target="_blank" rel="noopener">${{p.tier === 'wip' ? 'GitHub' : 'פתח נוכחי'}}</a>` : '',
+    demo && demo !== live ? `<a class="btn btn-ghost" href="${{esc(demo)}}" target="_blank" rel="noopener">תצוגה מקדימה</a>` : '',
+    p.gh && p.tier !== 'wip' ? `<a class="btn btn-ghost" href="${{esc(p.gh)}}" target="_blank" rel="noopener">GitHub</a>` : ''
   ].join('');
   const vers = (p.versions && p.versions.length) ? p.versions : [{{
     v: 'v1.0', date: '', label: 'גרסה נוכחית', desc: p.desc || '', url: live || ''
@@ -831,9 +875,16 @@ function render() {{
   if (!list.length) {{ g.innerHTML = '<div class="empty">לא נמצאו פרויקטים</div>'; return; }}
   g.innerHTML = list.map(r => {{
     const openUrl = effectiveUrl(r);
+    const demo = previewUrl(r);
     const versLabel = r.versCount ? ('גרסאות (' + r.versCount + ')') : 'גרסאות';
+    const openBtn = openUrl
+      ? `<a class="btn btn-primary" href="${{esc(openUrl)}}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${{r.tier === 'wip' ? 'GitHub' : 'פתח'}}</a>`
+      : '';
+    const previewBtn = demo && demo !== openUrl
+      ? `<a class="btn btn-ghost" href="${{esc(demo)}}" target="_blank" rel="noopener" onclick="event.stopPropagation()">תצוגה</a>`
+      : '';
     return `
-    <article class="card ${{r.tier}}" data-url="${{esc(openUrl)}}" tabindex="0">
+    <article class="card ${{r.tier}}" data-url="${{esc(openUrl || demo)}}" tabindex="0">
       <div class="cover">
         <img src="${{esc(r.preview)}}" alt="" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,hsl(${{r.id.length*40}},60%,35%),hsl(${{r.id.length*40+40}},50%,22%)')">
         <div class="badges">
@@ -848,8 +899,8 @@ function render() {{
         <p>${{esc(r.desc)}}</p>
         <div class="actions">
           <button type="button" class="btn btn-vers" data-vers="${{esc(r.id)}}" onclick="event.stopPropagation();openVersions('${{esc(r.id)}}')">${{versLabel}}</button>
-          ${{openUrl ? `<a class="btn btn-primary" href="${{esc(openUrl)}}" target="_blank" rel="noopener" onclick="event.stopPropagation()">פתח</a>` : ''}}
-          ${{r.gh ? `<a class="btn btn-ghost" href="${{esc(r.gh)}}" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>` : ''}}
+          ${{openBtn}}${{previewBtn}}
+          ${{r.gh && r.tier !== 'wip' ? `<a class="btn btn-ghost" href="${{esc(r.gh)}}" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>` : ''}}
         </div>
         ${{httpLine(r)}}
       </div>
@@ -905,9 +956,78 @@ else {{
 </html>'''
 
 
+def validate_catalog(catalog):
+    if not os.path.isfile(PORTFOLIO):
+        raise SystemExit(f'ERROR: portfolio missing — {PORTFOLIO}')
+    if len(catalog) < MIN_PROJECTS:
+        raise SystemExit(
+            f'ERROR: only {len(catalog)} projects in portfolio (need {MIN_PROJECTS}+). '
+            f'Check {PORTFOLIO} — avoid building an empty dashboard.'
+        )
+    ids = [p['id'] for p in catalog]
+    if len(ids) != len(set(ids)):
+        dupes = [i for i in ids if ids.count(i) > 1]
+        raise SystemExit(f'ERROR: duplicate project ids: {sorted(set(dupes))}')
+
+
+def sync_portfolio_git(html):
+    if not os.path.isdir(os.path.dirname(PORTFOLIO_GIT)):
+        return
+    try:
+        existing = open(PORTFOLIO_GIT, encoding='utf-8').read()
+    except OSError:
+        existing = ''
+    if existing != html:
+        open(PORTFOLIO_GIT, 'w', encoding='utf-8').write(html)
+        print('Synced', PORTFOLIO_GIT)
+
+
+def sync_list_txt(rows, generated):
+    """Keep Desktop\\רשימות פרויקטים\\תיק עבודות.txt in sync with portfolio."""
+    os.makedirs(LIST_DIR, exist_ok=True)
+    counts = {k: sum(1 for r in rows if r['tier'] == k) for k in TIER_META}
+    lines = [
+        'תיק עבודות פעיל — Patlas',
+        '=' * 50,
+        f'עודכן: {generated}',
+        f'מקור אמת: {PORTFOLIO}',
+        f'מפת סטטוס: {OUT_HTML}',
+        f'חי: {BASE_NETLIFY}status-dashboard.html',
+        '',
+        f'סה"כ: {len(rows)} פרויקטים',
+        f'  🟢 עובד מלא: {counts["full"]}',
+        f'  ✅ עובד: {counts["works"]}',
+        f'  🟡 דמו: {counts["demo"]}',
+        f'  🔵 בפיתוח: {counts["wip"]}',
+        f'  🔴 שבור: {counts["broken"]}',
+        '',
+        'הערה: קבצי הארכיון ב-D:\\ ו-623 פריטים ב"רשימת_כל_הפרויקטים" —',
+        '       אינם מוחלפים בקובץ זה. רק 46 הפרויקטים הפעילים בתיק.',
+        '',
+        'רשימה:',
+    ]
+    tier_order = sorted(TIER_META.keys(), key=lambda k: TIER_META[k]['order'])
+    by_tier = {t: [r for r in rows if r['tier'] == t] for t in tier_order}
+    n = 0
+    for tier in tier_order:
+        group = by_tier[tier]
+        if not group:
+            continue
+        lines.append('')
+        lines.append(f'── {TIER_META[tier]["icon"]} {TIER_META[tier]["label"]} ({len(group)}) ──')
+        for r in group:
+            n += 1
+            url = r.get('demoUrl') or r.get('url') or r.get('gh') or '—'
+            lines.append(f'{n:2}. [{r["id"]}] {r["icon"]} {r["name"]}')
+            lines.append(f'    {url[:90]}')
+    open(LIST_TXT, 'w', encoding='utf-8').write('\n'.join(lines) + '\n')
+    print('Wrote', LIST_TXT)
+
+
 def main():
     html = open(PORTFOLIO, encoding='utf-8').read()
     catalog = parse_catalog(html)
+    validate_catalog(catalog)
     print(f'Parsed {len(catalog)} projects, checking URLs (parallel)...')
     prev = load_prev_state()
     rows = build_rows(catalog)
@@ -915,8 +1035,12 @@ def main():
     save_state(rows)
     generated = datetime.now().strftime('%d.%m.%Y %H:%M')
     out = render_html(rows, generated, newly_broken)
+    if 'const DATA = []' in out or '"projects": []' in out:
+        raise SystemExit('ERROR: generated HTML has empty DATA — aborting.')
     for path in (OUT_HTML, OUT_NETLIFY):
         open(path, 'w', encoding='utf-8').write(out)
+    sync_portfolio_git(html)
+    sync_list_txt(rows, generated)
     dedicated = sum(1 for r in rows if r['dedicated'])
     print('Wrote', OUT_HTML)
     print('Wrote', OUT_NETLIFY)
