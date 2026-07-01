@@ -30,10 +30,10 @@ TIER = {
     'yomi': 'works', 'leads': 'works',
     'etrog': 'works', 'emotion': 'works', 'cables': 'works', 'breath': 'works',
     'dapor-schedule': 'works', 'codekids': 'works', 'crmgen': 'works', 'emailplus': 'works',
-    # wip — צריך עוד עבודה / פרוטוטייפ / contact
-    'dapor': 'demo', 'mltrain': 'wip', 'digibook': 'wip', 'budget': 'wip',
-    'etrog-studio': 'wip', 'green-farm': 'wip', 'diykids': 'wip',
-    'mahat': 'wip', 'mishnat': 'wip',
+    # works — דמו מלא / פרוטוטייפ אינטראקטיבי עובד
+    'mishnat': 'works', 'budget': 'works', 'mahat': 'works', 'dapor': 'works',
+    'mltrain': 'works', 'digibook': 'works', 'etrog-studio': 'works',
+    'green-farm': 'works', 'diykids': 'works',
 }
 
 # Sort later within same tier (higher = lower on page)
@@ -230,7 +230,7 @@ def resolve_tier(p, http, err, url):
         return 'broken'
     manual = TIER.get(p['id'])
     if p.get('contact') or p.get('status') == 'wip':
-        if manual in ('wip', 'demo', 'broken'):
+        if manual:
             return manual
         return 'wip'
     return manual or 'works'
@@ -354,7 +354,7 @@ def build_rows(catalog):
         futures = {}
         for p in catalog:
             url = project_url(p)
-            if url and not p.get('contact') and p['id'] not in SKIP_URL_CHECK:
+            if url and p['id'] not in SKIP_URL_CHECK:
                 futures[pool.submit(check_url, url)] = p['id']
         for fut in as_completed(futures):
             checks[futures[fut]] = fut.result()
@@ -629,7 +629,7 @@ function catLabel(c){{ return CAT_LABELS[c] || c; }}
 const BASE = {json.dumps(BASE_NETLIFY, ensure_ascii=False)};
 
 function effectiveUrl(r) {{
-  if (r.tier === 'wip' || r.contact) return r.gh || '';
+  if (r.tier === 'wip') return r.gh || '';
   const u = r.url || r.demoUrl || '';
   if (u && !u.includes('http%3A') && !u.includes('.netlify.app/https')) return u;
   return r.gh || u;
