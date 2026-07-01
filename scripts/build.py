@@ -31,7 +31,7 @@ TIER = {
     'etrog': 'works', 'emotion': 'works', 'cables': 'works', 'breath': 'works',
     'dapor-schedule': 'works', 'codekids': 'works', 'crmgen': 'works', 'emailplus': 'works',
     # wip — צריך עוד עבודה / פרוטוטייפ / contact
-    'dapor': 'wip', 'mltrain': 'wip', 'digibook': 'wip', 'budget': 'wip',
+    'dapor': 'demo', 'mltrain': 'wip', 'digibook': 'wip', 'budget': 'wip',
     'etrog-studio': 'wip', 'green-farm': 'wip', 'diykids': 'wip',
     'mahat': 'wip', 'mishnat': 'wip',
 }
@@ -40,12 +40,10 @@ TIER = {
 SORT_RANK = {
     'diykids': 88, 'green-farm': 89, 'etrog-studio': 90, 'mltrain': 91,
     'budget': 92, 'digibook': 93, 'mahat': 94, 'mishnat': 95,
-    'dapor-schedule': 96, 'dapor': 99,
+    'dapor-schedule': 96, 'dapor': 97,
 }
 
-VERSION_URL_FIX = {
-    'dapor': {'מבחן דפר/מבחן דפר/index.html': 'מבחן דפר/index.html'},
-}
+VERSION_URL_FIX = {}
 
 TIER_META = {
     'full':  {'label': 'עובד מלא', 'color': '#22c55e', 'icon': '🟢', 'order': 0},
@@ -105,6 +103,7 @@ LIVE_URL = {
     'recentfiles': 'https://storied-alfajores-6f10d2.netlify.app/RecentFiles/index.html',
     'signallab': 'https://davidpatlas-ai.github.io/signal-lab/',
     'aiterminals': 'https://github.com/DavidPatlas-AI/ai-terminals',
+    'mishnat': 'https://mishnat-yosef-dashboard.netlify.app/',
 }
 
 # Local / GitHub-only tools — skip HTTP probe (GitHub often blocks HEAD from scripts)

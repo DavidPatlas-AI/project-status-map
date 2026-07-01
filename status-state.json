@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-01T19:43:36",
+  "updated": "2026-07-01T19:57:07",
   "projects": {
     "aiterminals": {
       "http": 200,
@@ -223,6 +223,12 @@
       "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C_%D7%9E%D7%9C%D7%90_%D7%9E%D7%A4%D7%95%D7%A6%D7%A5/gallery.html",
       "httpErr": "ok"
     },
+    "dapor": {
+      "http": 200,
+      "tier": "demo",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%9E%D7%91%D7%97%D7%9F%20%D7%93%D7%A4%D7%A8/gallery.html",
+      "httpErr": "ok"
+    },
     "diykids": {
       "http": null,
       "tier": "wip",
@@ -270,12 +276,6 @@
       "tier": "wip",
       "url": "",
       "httpErr": "contact"
-    },
-    "dapor": {
-      "http": 200,
-      "tier": "wip",
-      "url": "",
-      "httpErr": "ok"
     }
   }
 }
