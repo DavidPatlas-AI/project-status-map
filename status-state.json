@@ -1,6 +1,12 @@
 {
-  "updated": "2026-07-01T11:59:28",
+  "updated": "2026-07-01T19:24:45",
   "projects": {
+    "aiterminals": {
+      "http": 200,
+      "tier": "full",
+      "url": "https://github.com/DavidPatlas-AI/ai-terminals",
+      "httpErr": "local-only"
+    },
     "signallab": {
       "http": 200,
       "tier": "full",
@@ -268,7 +274,7 @@
     "mishnat": {
       "http": null,
       "tier": "wip",
-      "url": "https://storied-alfajores-6f10d2.netlify.app/https%3A//github.com/DavidPatlas-AI/mishnat-yosef",
+      "url": "https://github.com/DavidPatlas-AI/mishnat-yosef",
       "httpErr": "contact"
     }
   }

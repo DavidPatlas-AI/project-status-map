@@ -20,7 +20,7 @@ TIER = {
     'idcheck': 'works', 'dapor': 'works', 'trends': 'works', 'polygraph': 'works',
     'money': 'works', 'rct': 'works', 'patlasgames': 'works', 'kidsgames': 'works',
     'shofar': 'works', 'greenhouse': 'works', 'pizza': 'works', 'palette': 'works',
-    'cyberos': 'works', 'bridgeos': 'works', 'recentfiles': 'works',
+    'cyberos': 'works', 'bridgeos': 'works', 'recentfiles': 'works', 'aiterminals': 'full',
     'csslib': 'works', 'codemap': 'works', 'echo': 'works', 'phish': 'works',
     'codesplit': 'works', 'codeauth': 'works', 'cyberos': 'works', 'cablevitality': 'works',
     'yomi': 'works', 'leads': 'works',
@@ -49,7 +49,7 @@ THEMES = {
     'crmgen':(210,230,68),'emailplus':(220,240,70),'pizza':(8,25,78),'palette':(300,320,76),
     'csslib':(285,305,72),'codemap':(165,185,70),'echo':(240,260,68),'phish':(350,330,66),
     'codesplit':(230,250,72),'codeauth':(255,275,70),'codekids':(320,300,68),'cyberos':(245,265,74),
-    'bridgeos':(42,58,72),'recentfiles':(248,268,70),
+    'bridgeos':(42,58,72),'recentfiles':(248,268,70),'aiterminals':(235,255,74),
     'etrog-studio':(52,38,76),'green-farm':(128,148,78),'cablevitality':(198,218,72),
     'diykids':(22,45,78),'mahat':(215,235,70),'signallab':(255,275,70),
     'mishnat':(28,42,74),
@@ -88,7 +88,11 @@ LIVE_URL = {
     'hashem': 'https://genuine-cobbler-8783c8.netlify.app/',
     'recentfiles': 'https://storied-alfajores-6f10d2.netlify.app/RecentFiles/index.html',
     'signallab': 'https://davidpatlas-ai.github.io/signal-lab/',
+    'aiterminals': 'https://github.com/DavidPatlas-AI/ai-terminals',
 }
+
+# Local / GitHub-only tools — skip HTTP probe (GitHub often blocks HEAD from scripts)
+SKIP_URL_CHECK = {'aiterminals'}
 
 
 def grab_quoted(text, start):
@@ -118,6 +122,52 @@ def grab_he_field(block, field):
     return grab_quoted(block, pos + len(marker)) if pos != -1 else None
 
 
+def head_block(block):
+    """Project-level fields only — stop before versions:[ to avoid grabbing nested url:."""
+    cut = block.find('versions:[')
+    return block if cut == -1 else block[:cut]
+
+
+def parse_versions(block):
+    start = block.find('versions:[')
+    if start == -1:
+        return []
+    i = start + len('versions:[')
+    depth, chunk_start, items = 1, None, []
+    while i < len(block) and depth > 0:
+        c = block[i]
+        if c == '{':
+            if depth == 1:
+                chunk_start = i + 1
+            depth += 1
+        elif c == '}':
+            depth -= 1
+            if depth == 1 and chunk_start is not None:
+                chunk = block[chunk_start:i]
+                items.append({
+                    'v': grab_field('{' + chunk, 'v') or '',
+                    'date': grab_field('{' + chunk, 'date') or '',
+                    'label': grab_field('{' + chunk, 'label') or '',
+                    'desc': grab_field('{' + chunk, 'desc') or '',
+                    'url': grab_field('{' + chunk, 'url') or '',
+                })
+                chunk_start = None
+        elif c == '[':
+            depth += 1
+        elif c == ']':
+            depth -= 1
+        i += 1
+    return items
+
+
+def abs_url(path):
+    if not path:
+        return ''
+    if path.startswith('http://') or path.startswith('https://'):
+        return path
+    return BASE_NETLIFY + urllib.parse.quote(path, safe='/')
+
+
 def parse_catalog(html):
     items = []
     for block in html.split("{ id:'")[1:]:
@@ -125,19 +175,22 @@ def parse_catalog(html):
         if not m:
             continue
         pid = m.group(1)
-        demo = grab_field(block, 'demo')
-        url = grab_field(block, 'url')
-        preview = grab_field(block, 'preview')
-        icon = grab_field(block, 'icon') or '📦'
-        status = grab_field(block, 'status') or 'live'
-        contact = 'contact:1' in block
-        name = grab_he_field(block, 'name') or pid
-        desc = grab_he_field(block, 'desc') or ''
-        cat_m = re.search(r"cat:\[([^\]]*)\]", block)
+        head = head_block(block)
+        demo = grab_field(head, 'demo')
+        url = grab_field(head, 'url')
+        preview = grab_field(head, 'preview')
+        icon = grab_field(head, 'icon') or '📦'
+        status = grab_field(head, 'status') or 'live'
+        contact = 'contact:1' in head
+        name = grab_he_field(head, 'name') or pid
+        desc = grab_he_field(head, 'desc') or ''
+        cat_m = re.search(r"cat:\[([^\]]*)\]", head)
         cats = re.findall(r"'([^']+)'", cat_m.group(1)) if cat_m else []
-        gh = grab_field(block, 'gh')
+        gh = grab_field(head, 'gh')
+        versions = parse_versions(block)
         items.append(dict(id=pid, name=name, desc=desc, icon=icon, status=status,
-                        contact=contact, demo=demo, url=url, preview=preview, gh=gh, cat=cats))
+                        contact=contact, demo=demo, url=url, preview=preview, gh=gh,
+                        cat=cats, versions=versions))
     return items
 
 
@@ -145,10 +198,10 @@ def project_url(p):
     if p['id'] in LIVE_URL:
         return LIVE_URL[p['id']]
     if p.get('demo'):
-        return p['demo']
+        return abs_url(p['demo'])
     if p.get('url'):
-        return BASE_NETLIFY + urllib.parse.quote(p['url'], safe='/')
-    return p.get('gh')
+        return abs_url(p['url'])
+    return p.get('gh') or ''
 
 
 def is_dedicated(url):
@@ -264,14 +317,17 @@ def build_rows(catalog):
         futures = {}
         for p in catalog:
             url = project_url(p)
-            if url and not p.get('contact'):
+            if url and not p.get('contact') and p['id'] not in SKIP_URL_CHECK:
                 futures[pool.submit(check_url, url)] = p['id']
         for fut in as_completed(futures):
             checks[futures[fut]] = fut.result()
 
     for p in catalog:
         url = project_url(p)
-        http, err = checks.get(p['id'], (None, 'contact' if p.get('contact') else 'no-url'))
+        if p['id'] in SKIP_URL_CHECK:
+            http, err = 200, 'local-only'
+        else:
+            http, err = checks.get(p['id'], (None, 'contact' if p.get('contact') else 'no-url'))
         tier = TIER.get(p['id'], 'works')
         if is_url_broken(http, err, url, p.get('contact')):
             tier = 'broken'
@@ -281,13 +337,15 @@ def build_rows(catalog):
         h, h2, s = theme_for(p)
         if not preview:
             preview = svg_cover(p['id'], p['icon'], h, h2, s)
+        versions = p.get('versions') or []
         prepared.append({
             'id': p['id'], 'name': p['name'], 'desc': p['desc'], 'icon': p['icon'],
             'tier': tier, 'tierLabel': TIER_META[tier]['label'], 'tierColor': TIER_META[tier]['color'],
             'tierIcon': TIER_META[tier]['icon'], 'tierOrder': TIER_META[tier]['order'],
             'url': url or '', 'http': http, 'httpErr': err,
             'preview': preview, 'gh': p.get('gh') or '', 'cats': p['cat'],
-            'dedicated': is_dedicated(url),
+            'dedicated': is_dedicated(url), 'contact': bool(p.get('contact')),
+            'versCount': len(versions), 'versions': versions,
         })
     prepared.sort(key=lambda r: (r['tierOrder'], r['name']))
     return prepared
@@ -432,6 +490,30 @@ header p{{color:var(--muted);font-size:1rem}}
 .fcard small{{color:var(--muted);font-size:.75rem}}
 .footer{{text-align:center;margin-top:32px;color:var(--muted);font-size:.8rem}}
 a.portfolio{{display:inline-block;margin-top:12px;color:var(--gold);text-decoration:none;font-weight:600}}
+.modal-overlay{{display:none;position:fixed;inset:0;z-index:100;background:rgba(4,4,10,.78);backdrop-filter:blur(8px);padding:20px;overflow-y:auto}}
+.modal-overlay.open{{display:flex;align-items:flex-start;justify-content:center}}
+.modal{{width:min(560px,100%);margin:40px auto;background:var(--surface);border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow);overflow:hidden}}
+.modal-head{{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 20px;border-bottom:1px solid var(--border)}}
+.modal-head h2{{font-size:1.05rem;font-weight:700}}
+.modal-close{{width:36px;height:36px;border-radius:999px;border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer;font-size:1.1rem}}
+.modal-close:hover{{border-color:var(--gold);color:var(--gold)}}
+.modal-actions{{display:flex;flex-wrap:wrap;gap:8px;padding:12px 20px;border-bottom:1px solid var(--border)}}
+.ver-timeline{{padding:16px 20px 22px;max-height:min(60vh,480px);overflow-y:auto}}
+.ver-item{{display:grid;grid-template-columns:72px 20px 1fr;gap:10px;margin-bottom:4px}}
+.ver-date{{font-size:.72rem;color:var(--muted);text-align:left;padding-top:4px}}
+.ver-dot-col{{display:flex;flex-direction:column;align-items:center}}
+.ver-dot{{width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--surface);box-shadow:0 0 0 2px rgba(124,106,245,.35);flex-shrink:0}}
+.ver-dot-first{{background:var(--gold);box-shadow:0 0 0 2px rgba(245,200,66,.4)}}
+.ver-line{{width:2px;flex:1;min-height:24px;background:rgba(124,106,245,.25);margin:4px 0}}
+.ver-content{{padding-bottom:16px}}
+.ver-badge{{display:inline-block;font-size:.72rem;font-weight:800;padding:3px 10px;border-radius:999px;background:rgba(124,106,245,.18);color:#c4b5fd;margin-bottom:6px}}
+.ver-badge-first{{background:rgba(245,200,66,.18);color:var(--gold)}}
+.ver-label{{font-weight:700;font-size:.88rem;margin-bottom:4px}}
+.ver-desc{{font-size:.8rem;color:var(--muted);line-height:1.45;margin-bottom:8px}}
+.ver-open{{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;border:1px solid var(--border);color:var(--text);text-decoration:none;font-size:.78rem;font-weight:600}}
+.ver-open:hover{{border-color:var(--gold);color:var(--gold)}}
+.toast{{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--surface);border:1px solid var(--gold);color:var(--text);padding:10px 18px;border-radius:999px;font-size:.85rem;font-weight:600;opacity:0;transition:.3s;z-index:200;pointer-events:none}}
+.toast.show{{opacity:1;transform:translateX(-50%) translateY(0)}}
 @media(max-width:640px){{
   .header-actions{{position:static;justify-content:center;margin-bottom:14px}}
   .grid.list .card{{flex-direction:column}}
@@ -479,8 +561,19 @@ a.portfolio{{display:inline-block;margin-top:12px;color:var(--gold);text-decorat
     <div class="chip-row"><span class="chip-label">תחום</span><div class="chips" id="catChips"></div></div>
   </div>
   <div class="grid" id="grid"></div>
-  <p class="footer">נוצר אוטומטית מ-portfolio.html · לחיצה על כרטיס = פתיחה</p>
+  <p class="footer">נוצר אוטומטית מ-portfolio.html · לחיצה על כרטיס = פתיחה · גרסאות בתוך הדף</p>
 </div>
+<div class="modal-overlay" id="versModal" role="dialog" aria-modal="true" aria-labelledby="versTitle">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="versTitle">היסטוריית גרסאות</h2>
+      <button type="button" class="modal-close" id="versClose" aria-label="סגור">✕</button>
+    </div>
+    <div class="modal-actions" id="versActions"></div>
+    <div class="ver-timeline" id="versTimeline"></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"></div>
 <script>
 const DATA = {data};
 const TIER_LABELS = {json.dumps({k:v['label'] for k,v in TIER_META.items()}, ensure_ascii=False)};
@@ -494,6 +587,82 @@ let viewMode = localStorage.getItem('patlas-status-view') || 'grid';
 
 function esc(s){{ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }}
 function catLabel(c){{ return CAT_LABELS[c] || c; }}
+const BASE = {json.dumps(BASE_NETLIFY, ensure_ascii=False)};
+
+function effectiveUrl(r) {{
+  const u = r.url || '';
+  if (u && !u.includes('http%3A') && !u.includes('.netlify.app/https')) return u;
+  return r.gh || u;
+}}
+
+function resolveVersionUrl(p, v) {{
+  const u = v.url || '';
+  if (!u) return effectiveUrl(p);
+  if (u.startsWith('http://') || u.startsWith('https://')) return u;
+  return BASE + encodeURI(u);
+}}
+
+function showToast(msg) {{
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => t.classList.remove('show'), 2200);
+}}
+
+function openVersions(id) {{
+  const p = DATA.find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('versTitle').textContent = p.icon + ' ' + p.name;
+  const actions = document.getElementById('versActions');
+  const live = effectiveUrl(p);
+  actions.innerHTML = [
+    live ? `<a class="btn btn-primary" href="${{esc(live)}}" target="_blank" rel="noopener">פתח נוכחי</a>` : '',
+    p.gh ? `<a class="btn btn-ghost" href="${{esc(p.gh)}}" target="_blank" rel="noopener">GitHub</a>` : ''
+  ].join('');
+  const vers = (p.versions && p.versions.length) ? p.versions : [{{
+    v: 'v1.0', date: '', label: 'גרסה נוכחית', desc: p.desc || '', url: live || ''
+  }}];
+  document.getElementById('versTimeline').innerHTML = vers.map((v, i) => {{
+    const vUrl = resolveVersionUrl(p, v);
+    const openBtn = vUrl ? `<a class="ver-open" href="${{esc(vUrl)}}" target="_blank" rel="noopener" onclick="event.stopPropagation()">פתח גרסה ↗</a>` : '';
+    const badge = (v.v || 'v1').replace(/^v/i, '');
+    return `<div class="ver-item">
+      <span class="ver-date">${{esc(v.date || '')}}</span>
+      <span class="ver-dot-col"><span class="ver-dot${{i === 0 ? ' ver-dot-first' : ''}}"></span>${{i < vers.length - 1 ? '<span class="ver-line"></span>' : ''}}</span>
+      <div class="ver-content">
+        <span class="ver-badge${{i === 0 ? ' ver-badge-first' : ''}}">v${{esc(badge)}}</span>
+        ${{v.label ? `<div class="ver-label">${{esc(v.label)}}</div>` : ''}}
+        <div class="ver-desc">${{esc(v.desc || '')}}</div>
+        ${{openBtn}}
+      </div>
+    </div>`;
+  }}).join('');
+  document.getElementById('versModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  history.replaceState(null, '', '?versions=' + encodeURIComponent(id));
+}}
+
+function closeVersions() {{
+  document.getElementById('versModal').classList.remove('open');
+  document.body.style.overflow = '';
+  if (location.search.includes('versions=')) history.replaceState(null, '', location.pathname);
+}}
+
+function initFromQuery() {{
+  const q = new URLSearchParams(location.search);
+  if (q.get('tier')) filter = q.get('tier');
+  if (q.get('cat')) catFilter = q.get('cat');
+  if (q.get('q')) document.getElementById('q').value = q.get('q');
+  if (q.get('view') === 'list') viewMode = 'list';
+  renderChips();
+  renderCatChips();
+  renderFeatured();
+  setView(viewMode);
+  render();
+  const vid = q.get('versions');
+  if (vid) setTimeout(() => openVersions(vid), 120);
+}}
 
 function renderStats(list) {{
   const c = {{full:0,works:0,demo:0,wip:0,broken:0}};
@@ -660,13 +829,17 @@ function render() {{
   const g = document.getElementById('grid');
   g.classList.toggle('list', viewMode === 'list');
   if (!list.length) {{ g.innerHTML = '<div class="empty">לא נמצאו פרויקטים</div>'; return; }}
-  g.innerHTML = list.map(r => `
-    <article class="card ${{r.tier}}" data-url="${{esc(r.url)}}" tabindex="0">
+  g.innerHTML = list.map(r => {{
+    const openUrl = effectiveUrl(r);
+    const versLabel = r.versCount ? ('גרסאות (' + r.versCount + ')') : 'גרסאות';
+    return `
+    <article class="card ${{r.tier}}" data-url="${{esc(openUrl)}}" tabindex="0">
       <div class="cover">
         <img src="${{esc(r.preview)}}" alt="" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,hsl(${{r.id.length*40}},60%,35%),hsl(${{r.id.length*40+40}},50%,22%)')">
         <div class="badges">
           <span class="badge" style="background:${{r.tierColor}}22;color:${{r.tierColor}};border-color:${{r.tierColor}}44">${{r.tierIcon}} ${{r.tierLabel}}</span>
           ${{r.dedicated ? '<span class="badge dedicated">🌐 ייעודי</span>' : ''}}
+          ${{r.versCount > 1 ? '<span class="badge dedicated">📚 ' + r.versCount + '</span>' : ''}}
         </div>
       </div>
       <div class="body">
@@ -674,16 +847,17 @@ function render() {{
         <h3>${{r.icon}} ${{esc(r.name)}}</h3>
         <p>${{esc(r.desc)}}</p>
         <div class="actions">
-          <a class="btn btn-vers" href="{BASE_NETLIFY}portfolio.html?versions=${{encodeURIComponent(r.id)}}" target="_blank" rel="noopener" onclick="event.stopPropagation()">היסטוריית גרסאות</a>
-          ${{r.url ? `<a class="btn btn-primary" href="${{esc(r.url)}}" target="_blank" rel="noopener" onclick="event.stopPropagation()">פתח</a>` : ''}}
+          <button type="button" class="btn btn-vers" data-vers="${{esc(r.id)}}" onclick="event.stopPropagation();openVersions('${{esc(r.id)}}')">${{versLabel}}</button>
+          ${{openUrl ? `<a class="btn btn-primary" href="${{esc(openUrl)}}" target="_blank" rel="noopener" onclick="event.stopPropagation()">פתח</a>` : ''}}
           ${{r.gh ? `<a class="btn btn-ghost" href="${{esc(r.gh)}}" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>` : ''}}
         </div>
         ${{httpLine(r)}}
       </div>
-    </article>`).join('');
+    </article>`;
+  }}).join('');
   g.querySelectorAll('.card').forEach(card => {{
     const open = () => {{ const u = card.dataset.url; if (u) window.open(u,'_blank'); }};
-    card.onclick = open;
+    card.onclick = e => {{ if (!e.target.closest('.actions')) open(); }};
     card.onkeydown = e => {{ if (e.key==='Enter') open(); }};
   }});
 }}
@@ -693,7 +867,7 @@ function renderFeatured() {{
   document.getElementById('featured').innerHTML = top.length ? `
     <h2>⭐ פרויקטים מובילים — עובדים מלא</h2>
     <div class="frow">${{top.map(r => `
-      <div class="fcard" data-url="${{esc(r.url)}}" tabindex="0">
+      <div class="fcard" data-url="${{esc(effectiveUrl(r))}}" tabindex="0">
         <img src="${{esc(r.preview)}}" alt="" loading="lazy">
         <div class="fb"><h4>${{r.icon}} ${{esc(r.name)}}</h4><small>${{r.tierLabel}}${{r.dedicated ? ' · 🌐' : ''}}</small></div>
       </div>`).join('')}}</div>` : '';
@@ -707,19 +881,25 @@ document.getElementById('q').oninput = render;
 document.getElementById('sort').onchange = render;
 document.getElementById('themeBtn').onclick = toggleTheme;
 document.getElementById('viewBtn').onclick = () => setView(viewMode === 'grid' ? 'list' : 'grid');
-document.getElementById('exportBtn').onclick = exportJson;
+document.getElementById('exportBtn').onclick = () => {{ exportJson(); showToast('JSON יוצא בהצלחה'); }};
+document.getElementById('versClose').onclick = closeVersions;
+document.getElementById('versModal').onclick = e => {{ if (e.target.id === 'versModal') closeVersions(); }};
 document.addEventListener('keydown', e => {{
+  if (e.key === 'Escape') closeVersions();
   if (e.key === '/' && document.activeElement !== document.getElementById('q')) {{
     e.preventDefault();
     document.getElementById('q').focus();
   }}
 }});
 initTheme();
-setView(viewMode);
-renderChips();
-renderCatChips();
-renderFeatured();
-render();
+if (location.search) initFromQuery();
+else {{
+  setView(viewMode);
+  renderChips();
+  renderCatChips();
+  renderFeatured();
+  render();
+}}
 </script>
 </body>
 </html>'''

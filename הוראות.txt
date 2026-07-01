@@ -10,7 +10,7 @@
 בטל סטארטאפ.bat      → הסרה מ-Startup
 
 scripts/
-  build.py           → מייצר את הדף (קורא מ-Desktop\_לסקירה\portfolio.html)
+  build.py           → מייצר את הדף (קורא מ-Desktop\פרויקטים\תיק עבודות\portfolio.html)
   watch.py           → סנכרון אוטומטי — --initial --deploy --debounce 2
   status-state.json  → מצב URL אחרון (להתראות על פרויקטים שנשברו)
   patch_portfolio.py → מוסיף קישור מפת סטטוס לתיק העבודות
@@ -22,7 +22,7 @@ scripts/
 
 סנכרון אוטומטי (שלב 3):
   1. הפעל סנכרון אוטומטי.bat (השאר את החלון פתוח)
-  2. ערוך ושמור את Desktop\_לסקירה\portfolio.html
+  2. ערוך ושמור את Desktop\פרויקטים\תיק עבודות\portfolio.html
   3. אחרי ~2 שניות — המפה מתעדכנת אוטומטית
   4. לפרסום ידני ל-Netlify: פרסום.bat
   5. לפרסום אוטומטי: סנכרון+פרסום.bat (דורש git + netlify CLI)

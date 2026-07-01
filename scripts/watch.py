@@ -11,10 +11,10 @@ from datetime import datetime
 
 SCRIPTS_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_DIR = os.path.dirname(SCRIPTS_DIR)
-REVIEW_DIR = os.path.join(os.path.expanduser('~'), 'Desktop', '_לסקירה')
-PORTFOLIO = os.path.join(REVIEW_DIR, 'portfolio.html')
+PORTFOLIO_DIR = os.path.join(os.path.expanduser('~'), 'Desktop', 'פרויקטים', 'תיק עבודות')
+PORTFOLIO = os.path.join(PORTFOLIO_DIR, 'portfolio.html')
 BUILD_SCRIPT = os.path.join(SCRIPTS_DIR, 'build.py')
-NETLIFY_DIR = os.path.join(REVIEW_DIR, 'portfolio-git-temp')
+NETLIFY_DIR = os.path.join(PORTFOLIO_DIR, 'portfolio-git-temp')
 NETLIFY_URL = 'https://storied-alfajores-6f10d2.netlify.app/status-dashboard.html'
 NETLIFY_SITE = '3276a480-932a-403f-8abe-07f7c9bfb3b0'
 PID_FILE = os.path.join(PROJECT_DIR, '.watch.pid')
