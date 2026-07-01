@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-01T20:55:34",
+  "updated": "2026-07-01T21:14:05",
   "projects": {
     "aiterminals": {
       "http": 200,
@@ -49,6 +49,12 @@
       "url": "https://maslul-rechev-2026.netlify.app",
       "httpErr": "ok"
     },
+    "polygraph": {
+      "http": 200,
+      "tier": "full",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%A4%D7%95%D7%9C%D7%99%D7%92%D7%A8%D7%A3%20%D7%93%D7%99%D7%92%D7%99%D7%98%D7%9C%D7%99/index.html",
+      "httpErr": "ok"
+    },
     "trends": {
       "http": 200,
       "tier": "full",
@@ -71,12 +77,6 @@
       "http": 200,
       "tier": "full",
       "url": "https://genuine-cobbler-8783c8.netlify.app/",
-      "httpErr": "ok"
-    },
-    "polygraph": {
-      "http": 200,
-      "tier": "full",
-      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%A4%D7%95%D7%9C%D7%99%D7%92%D7%A8%D7%A3%20%D7%93%D7%99%D7%92%D7%99%D7%98%D7%9C%D7%99/index.html",
       "httpErr": "ok"
     },
     "mishnat": {
@@ -175,6 +175,12 @@
       "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%9E%D6%B0%D7%A0%D6%B7%D7%AA%D6%B5%D6%BC%D7%97%D6%B7%20%D7%A7%D7%95%D6%B9%D7%93%20%D7%90%D6%B2%D7%9E%D6%B4%D7%AA%D6%B4%D6%BC%D7%99/final_kids_decoder.html",
       "httpErr": "ok"
     },
+    "phish": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%AA%D7%97%D7%A4%D7%A9%D7%A0%D7%99/index.html",
+      "httpErr": "ok"
+    },
     "codesplit": {
       "http": 200,
       "tier": "works",
@@ -221,12 +227,6 @@
       "http": 200,
       "tier": "works",
       "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%A9%D7%96%D7%9D%20%D7%A0%D7%A9%D7%99%D7%9E%D7%95%D7%AA/next_gen_biometric_system.html",
-      "httpErr": "ok"
-    },
-    "phish": {
-      "http": 200,
-      "tier": "works",
-      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%AA%D7%97%D7%A4%D7%A9%D7%A0%D7%99/index.html",
       "httpErr": "ok"
     },
     "pizza": {
