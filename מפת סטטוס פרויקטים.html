@@ -117,6 +117,9 @@ header p{color:var(--muted);font-size:1rem}
 .leg b{color:var(--text);display:block;margin-bottom:4px}
 .featured{margin-bottom:28px}
 .featured h2{font-family:Syne,sans-serif;font-size:1.2rem;margin-bottom:14px;color:var(--gold)}
+.wip-banner{margin-bottom:22px;padding:14px 18px;border-radius:16px;border:1px solid rgba(96,165,250,.35);background:rgba(96,165,250,.08);display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.wip-banner p{font-size:.88rem;color:var(--muted);flex:1;min-width:200px}
+.wip-banner b{color:#93c5fd}
 .frow{display:flex;gap:14px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x mandatory}
 .fcard{flex:0 0 260px;scroll-snap-align:start;background:var(--surface);border:2px solid rgba(34,197,94,.35);
   border-radius:16px;overflow:hidden;cursor:pointer;transition:.2s}
@@ -168,7 +171,7 @@ a.portfolio{display:inline-block;margin-top:12px;color:var(--gold);text-decorati
       <button class="icon-btn" id="exportBtn" type="button" title="ייצוא JSON">⬇ JSON</button>
     </div>
     <h1>🗺️ מפת סטטוס פרויקטים</h1>
-    <p>מה באמת עובד · מה דמו · מה בפיתוח — עודכן 01.07.2026 19:39</p>
+    <p>מה באמת עובד · מה דמו · מה בפיתוח — עודכן 01.07.2026 19:43</p>
     <div class="health">
       <div class="health-track"><div class="health-fill" id="healthFill" style="width:80%"></div></div>
       <span class="health-txt" id="healthTxt">80% פרויקטים פעילים (37/46)</span>
@@ -185,6 +188,7 @@ a.portfolio{display:inline-block;margin-top:12px;color:var(--gold);text-decorati
     <div class="leg"><b>🔴 שבור</b>URL לא נגיש או HTTP 4xx/5xx — דורש תיקון</div>
   </div>
   <div class="featured" id="featured"></div>
+  <div class="wip-banner" id="wipBanner" hidden></div>
   <div class="toolbar">
     <div class="toolbar-row">
       <input class="search" id="q" type="search" placeholder="🔍 חפש פרויקט... (/)" autocomplete="off">
@@ -216,7 +220,7 @@ const DATA = [{"id": "aiterminals", "name": "AI Terminals — מודלים טר�
 const TIER_LABELS = {"full": "עובד מלא", "works": "עובד", "demo": "דמו / נראה", "wip": "בפיתוח", "broken": "שבור"};
 const CAT_LABELS = {"flag": "דגל", "edu": "חינוך", "ai": "AI", "jewish": "יהדות", "games": "משחקים", "biz": "עסקים", "dev": "פיתוח", "live": "חי"};
 const ALL_CATS = ["ai", "biz", "dev", "edu", "flag", "games", "jewish"];
-const GENERATED = "01.07.2026 19:39";
+const GENERATED = "01.07.2026 19:43";
 const NEWLY_BROKEN = [];
 let filter = 'all';
 let catFilter = 'all';
@@ -303,6 +307,7 @@ function initFromQuery() {
   renderChips();
   renderCatChips();
   renderFeatured();
+  renderWipBanner();
   setView(viewMode);
   render();
   const vid = q.get('versions');
@@ -514,6 +519,24 @@ function render() {
   });
 }
 
+function renderWipBanner() {
+  const wip = DATA.filter(r => r.tier === 'wip');
+  const el = document.getElementById('wipBanner');
+  if (!wip.length) { el.hidden = true; el.innerHTML = ''; return; }
+  el.hidden = false;
+  const names = wip.slice(0, 4).map(r => r.icon + ' ' + r.name).join(' · ');
+  const more = wip.length > 4 ? ' +' + (wip.length - 4) + ' נוספים' : '';
+  el.innerHTML = `<p><b>🔵 ${wip.length} בפיתוח</b> — דורשים עבודה לפני שמסמנים כ"עובד": ${names}${more}</p>
+    <button type="button" class="btn btn-ghost" id="wipFilterBtn">הצג רק בפיתוח</button>`;
+  document.getElementById('wipFilterBtn').onclick = () => {
+    filter = 'wip';
+    renderChips();
+    renderCatChips();
+    render();
+    document.getElementById('grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+}
+
 function renderFeatured() {
   const top = DATA.filter(r => r.tier === 'full').slice(0, 6);
   document.getElementById('featured').innerHTML = top.length ? `
@@ -550,6 +573,7 @@ else {
   renderChips();
   renderCatChips();
   renderFeatured();
+  renderWipBanner();
   render();
 }
 </script>

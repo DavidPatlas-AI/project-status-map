@@ -516,6 +516,9 @@ header p{{color:var(--muted);font-size:1rem}}
 .leg b{{color:var(--text);display:block;margin-bottom:4px}}
 .featured{{margin-bottom:28px}}
 .featured h2{{font-family:Syne,sans-serif;font-size:1.2rem;margin-bottom:14px;color:var(--gold)}}
+.wip-banner{{margin-bottom:22px;padding:14px 18px;border-radius:16px;border:1px solid rgba(96,165,250,.35);background:rgba(96,165,250,.08);display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}}
+.wip-banner p{{font-size:.88rem;color:var(--muted);flex:1;min-width:200px}}
+.wip-banner b{{color:#93c5fd}}
 .frow{{display:flex;gap:14px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x mandatory}}
 .fcard{{flex:0 0 260px;scroll-snap-align:start;background:var(--surface);border:2px solid rgba(34,197,94,.35);
   border-radius:16px;overflow:hidden;cursor:pointer;transition:.2s}}
@@ -584,6 +587,7 @@ a.portfolio{{display:inline-block;margin-top:12px;color:var(--gold);text-decorat
     <div class="leg"><b>🔴 שבור</b>URL לא נגיש או HTTP 4xx/5xx — דורש תיקון</div>
   </div>
   <div class="featured" id="featured"></div>
+  <div class="wip-banner" id="wipBanner" hidden></div>
   <div class="toolbar">
     <div class="toolbar-row">
       <input class="search" id="q" type="search" placeholder="🔍 חפש פרויקט... (/)" autocomplete="off">
@@ -702,6 +706,7 @@ function initFromQuery() {{
   renderChips();
   renderCatChips();
   renderFeatured();
+  renderWipBanner();
   setView(viewMode);
   render();
   const vid = q.get('versions');
@@ -913,6 +918,24 @@ function render() {{
   }});
 }}
 
+function renderWipBanner() {{
+  const wip = DATA.filter(r => r.tier === 'wip');
+  const el = document.getElementById('wipBanner');
+  if (!wip.length) {{ el.hidden = true; el.innerHTML = ''; return; }}
+  el.hidden = false;
+  const names = wip.slice(0, 4).map(r => r.icon + ' ' + r.name).join(' · ');
+  const more = wip.length > 4 ? ' +' + (wip.length - 4) + ' נוספים' : '';
+  el.innerHTML = `<p><b>🔵 ${{wip.length}} בפיתוח</b> — דורשים עבודה לפני שמסמנים כ"עובד": ${{names}}${{more}}</p>
+    <button type="button" class="btn btn-ghost" id="wipFilterBtn">הצג רק בפיתוח</button>`;
+  document.getElementById('wipFilterBtn').onclick = () => {{
+    filter = 'wip';
+    renderChips();
+    renderCatChips();
+    render();
+    document.getElementById('grid').scrollIntoView({{ behavior: 'smooth', block: 'start' }});
+  }};
+}}
+
 function renderFeatured() {{
   const top = DATA.filter(r => r.tier === 'full').slice(0, 6);
   document.getElementById('featured').innerHTML = top.length ? `
@@ -949,6 +972,7 @@ else {{
   renderChips();
   renderCatChips();
   renderFeatured();
+  renderWipBanner();
   render();
 }}
 </script>
