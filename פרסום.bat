@@ -3,7 +3,7 @@ cd /d "%~dp0"
 echo בונה מפה מחדש...
 python scripts\build.py
 if errorlevel 1 pause & exit /b 1
-cd /d "%~dp0..\_לסקירה\portfolio-git-temp"
+cd /d "%~dp0..\תיק עבודות\portfolio-git-temp"
 netlify status 2>&1 | findstr /i "storied-alfajores-6f10d2" >nul
 if errorlevel 1 (
   echo.

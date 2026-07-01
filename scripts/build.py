@@ -6,21 +6,21 @@ from datetime import datetime
 
 SCRIPTS_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_DIR = os.path.dirname(SCRIPTS_DIR)
-REVIEW_DIR = os.path.join(os.path.expanduser('~'), 'Desktop', '_לסקירה')
-PORTFOLIO = os.path.join(REVIEW_DIR, 'portfolio.html')
+PORTFOLIO_DIR = os.path.join(os.path.expanduser('~'), 'Desktop', 'פרויקטים', 'תיק עבודות')
+PORTFOLIO = os.path.join(PORTFOLIO_DIR, 'portfolio.html')
 OUT_HTML = os.path.join(PROJECT_DIR, 'מפת סטטוס פרויקטים.html')
-OUT_NETLIFY = os.path.join(REVIEW_DIR, 'portfolio-git-temp', 'status-dashboard.html')
+OUT_NETLIFY = os.path.join(PORTFOLIO_DIR, 'portfolio-git-temp', 'status-dashboard.html')
 STATE_FILE = os.path.join(PROJECT_DIR, 'status-state.json')
 BASE_NETLIFY = 'https://storied-alfajores-6f10d2.netlify.app/'
 
 # Manual quality tier (truth on the ground)
 TIER = {
-    'math': 'full', 'maslul': 'full', 'teshuva': 'full', 'morseviz': 'full', 'codeplayer': 'full',
+    'math': 'full', 'maslul': 'full', 'teshuva': 'full', 'signallab': 'full',
     'hashem': 'full',  # real PWA on genuine-cobbler
     'idcheck': 'works', 'dapor': 'works', 'trends': 'works', 'polygraph': 'works',
     'money': 'works', 'rct': 'works', 'patlasgames': 'works', 'kidsgames': 'works',
     'shofar': 'works', 'greenhouse': 'works', 'pizza': 'works', 'palette': 'works',
-    'cyberos': 'works', 'bridgeos': 'works',
+    'cyberos': 'works', 'bridgeos': 'works', 'recentfiles': 'works',
     'csslib': 'works', 'codemap': 'works', 'echo': 'works', 'phish': 'works',
     'codesplit': 'works', 'codeauth': 'works', 'cyberos': 'works', 'cablevitality': 'works',
     'yomi': 'works', 'leads': 'works',
@@ -28,6 +28,7 @@ TIER = {
     'dapor-schedule': 'works', 'codekids': 'works', 'crmgen': 'works', 'emailplus': 'works',
     'mltrain': 'works', 'digibook': 'works', 'budget': 'works', 'etrog-studio': 'works',
     'green-farm': 'works', 'diykids': 'works', 'mahat': 'works',
+    'mishnat': 'wip',
 }
 
 TIER_META = {
@@ -48,9 +49,10 @@ THEMES = {
     'crmgen':(210,230,68),'emailplus':(220,240,70),'pizza':(8,25,78),'palette':(300,320,76),
     'csslib':(285,305,72),'codemap':(165,185,70),'echo':(240,260,68),'phish':(350,330,66),
     'codesplit':(230,250,72),'codeauth':(255,275,70),'codekids':(320,300,68),'cyberos':(245,265,74),
-    'bridgeos':(42,58,72),
+    'bridgeos':(42,58,72),'recentfiles':(248,268,70),
     'etrog-studio':(52,38,76),'green-farm':(128,148,78),'cablevitality':(198,218,72),
-    'diykids':(22,45,78),'mahat':(215,235,70),'morseviz':(195,220,74),'codeplayer':(255,275,70),
+    'diykids':(22,45,78),'mahat':(215,235,70),'signallab':(255,275,70),
+    'mishnat':(28,42,74),
 }
 
 CAT_HUE = {'flag':42,'edu':210,'ai':270,'jewish':38,'games':320,'biz':160,'dev':250,'live':42}
@@ -75,8 +77,7 @@ PREVIEWS = {
     'trends': 'https://images.unsplash.com/photo-1611162616475-46b635cb6868?auto=format&fit=crop&w=900&q=80',
     'polygraph': 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=900&q=80',
     'idcheck': 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=900&q=80',
-    'morseviz': 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=900&q=80',
-    'codeplayer': 'https://images.unsplash.com/photo-1516116216624-53e697fedbea?auto=format&fit=crop&w=900&q=80',
+    'signallab': 'https://images.unsplash.com/photo-1516116216624-53e697fedbea?auto=format&fit=crop&w=900&q=80',
     'money': 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=900&q=80',
     'patlasgames': 'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=900&q=80',
     'csslib': 'https://images.unsplash.com/photo-1507727300440-9e5a8b565c1b?auto=format&fit=crop&w=900&q=80',
@@ -85,6 +86,8 @@ PREVIEWS = {
 
 LIVE_URL = {
     'hashem': 'https://genuine-cobbler-8783c8.netlify.app/',
+    'recentfiles': 'https://storied-alfajores-6f10d2.netlify.app/RecentFiles/index.html',
+    'signallab': 'https://davidpatlas-ai.github.io/signal-lab/',
 }
 
 
@@ -218,7 +221,7 @@ def svg_cover(pid, icon, h, h2, s):
     pat = ''
     if pid in ('math','dapor','idcheck','csslib','cyberos','codemap','crmgen'):
         pat = '<defs><pattern id="g" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M0 24L24 0" stroke="rgba(255,255,255,.09)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#g)"/>'
-    elif pid in ('teshuva','trends','echo','breath','emotion','morseviz'):
+    elif pid in ('teshuva','trends','echo','breath','emotion','signallab'):
         pat = '<path d="M0 70 Q90 10 180 70 T360 70" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="2.5"/><path d="M0 110 Q90 50 180 110 T360 110" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="2"/>'
     else:
         pat = '<circle cx="50" cy="35" r="4" fill="rgba(255,255,255,.18)"/><circle cx="310" cy="70" r="6" fill="rgba(255,255,255,.1)"/><circle cx="220" cy="150" r="3" fill="rgba(255,255,255,.14)"/><circle cx="120" cy="90" r="2" fill="rgba(255,255,255,.12)"/>'

@@ -1,16 +1,10 @@
 {
-  "updated": "2026-06-30T22:41:35",
+  "updated": "2026-07-01T11:59:28",
   "projects": {
-    "codeplayer": {
+    "signallab": {
       "http": 200,
       "tier": "full",
-      "url": "https://davidpatlas-ai.github.io/code-player/",
-      "httpErr": "ok"
-    },
-    "morseviz": {
-      "http": 200,
-      "tier": "full",
-      "url": "https://davidpatlas-ai.github.io/morseviz/",
+      "url": "https://davidpatlas-ai.github.io/signal-lab/",
       "httpErr": "ok"
     },
     "teshuva": {
@@ -235,6 +229,12 @@
       "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%A4%D7%98%D7%9C%D7%A1%20%D7%9E%D7%A9%D7%97%D7%A7%D7%99%D7%9D/index.html",
       "httpErr": "ok"
     },
+    "recentfiles": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/RecentFiles/index.html",
+      "httpErr": "ok"
+    },
     "mahat": {
       "http": null,
       "tier": "works",
@@ -265,11 +265,11 @@
       "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%A4%D7%99%D7%A6%D7%94/index.html",
       "httpErr": "ok"
     },
-    "recentfiles": {
+    "mishnat": {
       "http": null,
-      "tier": "broken",
-      "url": "http://localhost:8082/recent-files.html",
-      "httpErr": "[WinError 10061] No connection could be "
+      "tier": "wip",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/https%3A//github.com/DavidPatlas-AI/mishnat-yosef",
+      "httpErr": "contact"
     }
   }
 }
