@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-01T20:34:09",
+  "updated": "2026-07-01T20:43:12",
   "projects": {
     "aiterminals": {
       "http": 200,
@@ -17,6 +17,12 @@
       "http": 200,
       "tier": "full",
       "url": "https://storied-alfajores-6f10d2.netlify.app/adhd_home/",
+      "httpErr": "ok"
+    },
+    "etrog": {
+      "http": 200,
+      "tier": "full",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%91%D7%95%D7%93%D7%A7%20%D7%90%D7%AA%D7%A8%D7%95%D7%92%D7%99%D7%9D/index.html",
       "httpErr": "ok"
     },
     "teshuva": {
@@ -79,6 +85,12 @@
       "url": "https://mishnat-yosef-dashboard.netlify.app/",
       "httpErr": "ok"
     },
+    "dapor-schedule": {
+      "http": 200,
+      "tier": "full",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C_%D7%9E%D7%9C%D7%90_%D7%9E%D7%A4%D7%95%D7%A6%D7%A5/gallery.html",
+      "httpErr": "ok"
+    },
     "dapor": {
       "http": 200,
       "tier": "full",
@@ -107,12 +119,6 @@
       "http": 200,
       "tier": "works",
       "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%A2%D7%99%D7%A6%D7%95%D7%91%D7%99%D7%9D%20CSS/gallery.html",
-      "httpErr": "ok"
-    },
-    "etrog": {
-      "http": 200,
-      "tier": "works",
-      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%91%D7%95%D7%93%D7%A7%20%D7%90%D7%AA%D7%A8%D7%95%D7%92%D7%99%D7%9D/index.html",
       "httpErr": "ok"
     },
     "echo": {
@@ -269,12 +275,6 @@
       "http": 200,
       "tier": "works",
       "url": "https://storied-alfajores-6f10d2.netlify.app/mahat/index.html",
-      "httpErr": "ok"
-    },
-    "dapor-schedule": {
-      "http": 200,
-      "tier": "works",
-      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C_%D7%9E%D7%9C%D7%90_%D7%9E%D7%A4%D7%95%D7%A6%D7%A5/gallery.html",
       "httpErr": "ok"
     }
   }

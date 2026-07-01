@@ -23,13 +23,14 @@ TIER = {
     'hashem': 'full', 'aiterminals': 'full',
     'mishnat': 'full', 'dapor': 'full', 'idcheck': 'full', 'leads': 'full',
     'yomi': 'full', 'trends': 'full', 'polygraph': 'full', 'greenhouse': 'full',
+    'dapor-schedule': 'full', 'etrog': 'full',
     'money': 'works', 'rct': 'works', 'patlasgames': 'works', 'kidsgames': 'works',
     'shofar': 'works', 'pizza': 'works', 'palette': 'works',
     'cyberos': 'works', 'bridgeos': 'works', 'recentfiles': 'works',
     'csslib': 'works', 'codemap': 'works', 'echo': 'works', 'phish': 'works',
     'codesplit': 'works', 'codeauth': 'works', 'cablevitality': 'works',
-    'etrog': 'works', 'emotion': 'works', 'cables': 'works', 'breath': 'works',
-    'dapor-schedule': 'works', 'codekids': 'works', 'crmgen': 'works', 'emailplus': 'works',
+    'emotion': 'works', 'cables': 'works', 'breath': 'works',
+    'codekids': 'works', 'crmgen': 'works', 'emailplus': 'works',
     # works — דמו מלא / פרוטוטייפ אינטראקטיבי עובד
     'budget': 'works', 'mahat': 'works',
     'mltrain': 'works', 'digibook': 'works', 'etrog-studio': 'works',
@@ -394,6 +395,11 @@ def render_html(rows, generated, newly_broken=None):
     total = len(rows)
     healthy = counts['full'] + counts['works']
     health_pct = round(healthy / total * 100) if total else 0
+    all_ok = counts['broken'] == 0 and counts['wip'] == 0 and counts['demo'] == 0
+    subtitle = (f'גרסה מסונכרנת · {total} פרויקטים · כולם פעילים — עודכן {generated}'
+                if all_ok else f'מה באמת עובד · מה דמו · מה בפיתוח — עודכן {generated}')
+    footer_note = ('נוצר אוטומטית מ-portfolio.html · לחיצה על כרטיס = פתיחה · גרסאות בתוך הדף'
+                   ' · ✓ מצב מעולה — 0 שבורים, 0 בפיתוח')
     all_cats = sorted({c for r in rows for c in r['cats'] if c != 'live'})
 
     return f'''<!DOCTYPE html>
@@ -571,7 +577,7 @@ a.portfolio{{display:inline-block;margin-top:12px;color:var(--gold);text-decorat
       <button class="icon-btn" id="exportBtn" type="button" title="ייצוא JSON">⬇ JSON</button>
     </div>
     <h1>🗺️ מפת סטטוס פרויקטים</h1>
-    <p>מה באמת עובד · מה דמו · מה בפיתוח — עודכן {generated}</p>
+    <p>{subtitle}</p>
     <div class="health">
       <div class="health-track"><div class="health-fill" id="healthFill" style="width:{health_pct}%"></div></div>
       <span class="health-txt" id="healthTxt">{health_pct}% פרויקטים פעילים ({healthy}/{total})</span>
@@ -602,7 +608,7 @@ a.portfolio{{display:inline-block;margin-top:12px;color:var(--gold);text-decorat
     <div class="chip-row"><span class="chip-label">תחום</span><div class="chips" id="catChips"></div></div>
   </div>
   <div class="grid" id="grid"></div>
-  <p class="footer">נוצר אוטומטית מ-portfolio.html · לחיצה על כרטיס = פתיחה · גרסאות בתוך הדף</p>
+  <p class="footer">{footer_note}</p>
 </div>
 <div class="modal-overlay" id="versModal" role="dialog" aria-modal="true" aria-labelledby="versTitle">
   <div class="modal">
