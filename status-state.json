@@ -1,0 +1,275 @@
+{
+  "updated": "2026-06-30T22:41:35",
+  "projects": {
+    "codeplayer": {
+      "http": 200,
+      "tier": "full",
+      "url": "https://davidpatlas-ai.github.io/code-player/",
+      "httpErr": "ok"
+    },
+    "morseviz": {
+      "http": 200,
+      "tier": "full",
+      "url": "https://davidpatlas-ai.github.io/morseviz/",
+      "httpErr": "ok"
+    },
+    "teshuva": {
+      "http": 200,
+      "tier": "full",
+      "url": "https://teshuva-algorithm.netlify.app",
+      "httpErr": "ok"
+    },
+    "maslul": {
+      "http": 200,
+      "tier": "full",
+      "url": "https://maslul-rechev-2026.netlify.app",
+      "httpErr": "ok"
+    },
+    "math": {
+      "http": 200,
+      "tier": "full",
+      "url": "https://math-haredim.netlify.app",
+      "httpErr": "ok"
+    },
+    "hashem": {
+      "http": 200,
+      "tier": "full",
+      "url": "https://genuine-cobbler-8783c8.netlify.app/",
+      "httpErr": "ok"
+    },
+    "bridgeos": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/BridgeOS/index.html",
+      "httpErr": "ok"
+    },
+    "cablevitality": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/CableVitality/index.html",
+      "httpErr": "ok"
+    },
+    "cyberos": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/CyberOS/index.html",
+      "httpErr": "ok"
+    },
+    "yomi": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/adhd_home/",
+      "httpErr": "ok"
+    },
+    "csslib": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%A2%D7%99%D7%A6%D7%95%D7%91%D7%99%D7%9D%20CSS/gallery.html",
+      "httpErr": "ok"
+    },
+    "dapor": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%9E%D7%91%D7%97%D7%9F%20%D7%93%D7%A4%D7%A8/gallery.html",
+      "httpErr": "ok"
+    },
+    "etrog": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%91%D7%95%D7%93%D7%A7%20%D7%90%D7%AA%D7%A8%D7%95%D7%92%D7%99%D7%9D/index.html",
+      "httpErr": "ok"
+    },
+    "echo": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%90%D7%A0%D7%99%20%D7%A2%D7%9C%20%D7%A8%D7%9E%D7%A7%D7%95%D7%9C%20%D7%A1%D7%99%D7%9E%D7%9F%20%D7%A9%D7%90%D7%9C%D7%94/index.html",
+      "httpErr": "ok"
+    },
+    "money": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%94%D7%9B%D7%9C%20%D7%91%D7%9B%D7%A1%D7%A3/index.html",
+      "httpErr": "ok"
+    },
+    "palette": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%94%D7%A4%D7%9C%D7%98%D7%94%20%D7%A9%D7%9C%20%D7%A4%D7%98%D7%9C%D7%A1/index.html",
+      "httpErr": "ok"
+    },
+    "green-farm": {
+      "http": null,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/wip-green-farm/index.html",
+      "httpErr": "contact"
+    },
+    "greenhouse": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%97%D7%9E%D7%9E%D7%94%20%D7%93%D7%99%D7%92%D7%99%D7%98%D7%9C%D7%99%D7%AA/index.html",
+      "httpErr": "ok"
+    },
+    "leads": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%9C%D7%99%D7%93%D7%99%D7%9D%20%D7%9E%D7%92%D7%99%D7%91%D7%95%D7%99%20%D7%95%D7%95%D7%A6%D7%90%D7%A4/project_gallery.html",
+      "httpErr": "ok"
+    },
+    "emotion": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%9E%D7%96%D7%94%D7%94%20%D7%A8%D7%92%D7%A9%D7%95%D7%AA/index.html",
+      "httpErr": "ok"
+    },
+    "emailplus": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%9E%D7%97%D7%95%D7%9C%D7%9C%20%D7%9E%D7%99%D7%99%D7%9C%20%D7%A2%D7%9D%20%2B%20%D7%A2%D7%91%D7%95%D7%A8%20%D7%A1%D7%93%D7%A8%20%D7%95%D7%A1%D7%A4%D7%90%D7%9D/email_generator_clean.html",
+      "httpErr": "ok"
+    },
+    "crmgen": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%9E%D7%97%D7%95%D7%9C%D7%9C%20%D7%A7%D7%91%D7%A6%D7%99%20CRM/crm_generator_ultimate.html",
+      "httpErr": "ok"
+    },
+    "codemap": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%9E%D7%A4%D7%94%20%D7%A9%D7%9E%D7%A8%D7%90%D7%94%20%D7%9C%D7%99%20%D7%A7%D7%9E%D7%A4%D7%99%D7%99%D7%A0%D7%99%D7%9D%20%D7%A9%D7%A2%D7%95%D7%9E%D7%93%D7%99%D7%9D%20%D7%9C%D7%99%20%D7%94%D7%A8%D7%90%D7%A9/gallery_index.html",
+      "httpErr": "ok"
+    },
+    "codeauth": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%9E%D7%A4%D7%A2%D7%A0%D7%97%20%D7%A7%D7%95%D7%93%20%D7%A8%D7%92%D7%A9%D7%99/index.html",
+      "httpErr": "ok"
+    },
+    "codekids": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%9E%D6%B0%D7%A0%D6%B7%D7%AA%D6%B5%D6%BC%D7%97%D6%B7%20%D7%A7%D7%95%D6%B9%D7%93%20%D7%90%D6%B2%D7%9E%D6%B4%D7%AA%D6%B4%D6%BC%D7%99/final_kids_decoder.html",
+      "httpErr": "ok"
+    },
+    "dapor-schedule": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C_%D7%9E%D7%9C%D7%90_%D7%9E%D7%A4%D7%95%D7%A6%D7%A5/gallery.html",
+      "httpErr": "ok"
+    },
+    "diykids": {
+      "http": null,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/wip-diykids/index.html",
+      "httpErr": "contact"
+    },
+    "mltrain": {
+      "http": null,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/wip-mltrain/index.html",
+      "httpErr": "contact"
+    },
+    "trends": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%99%D7%A6%D7%99%D7%A8%D7%AA%20%D7%AA%D7%95%D7%9B%D7%9F%20%D7%95%D7%99%D7%A8%D7%90%D7%9C%D7%99%20%D7%9C%D7%A4%D7%99%20%D7%98%D7%A8%D7%A0%D7%93%D7%99%D7%9D/index.html",
+      "httpErr": "ok"
+    },
+    "codesplit": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%9E%D7%A4%D7%A6%D7%9C%20%D7%A7%D7%95%D7%93%20%D7%9E%D7%A7%D7%9C%D7%95%D7%93/index.html",
+      "httpErr": "ok"
+    },
+    "idcheck": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/ID%20%D7%9E%D7%A4%D7%A2%D7%A0%D7%97%20%D7%95%D7%91%D7%95%D7%93%D7%A7/index.html",
+      "httpErr": "ok"
+    },
+    "cables": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%9E%D7%A9%D7%97%D7%A7%20%D7%9B%D7%91%D7%9C%D7%99%D7%9D/digital_connections_lab.html",
+      "httpErr": "ok"
+    },
+    "kidsgames": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%9E%D7%A9%D7%97%D7%A7%D7%99%D7%9D%20%D7%9C%D7%99%D7%9C%D7%93%D7%99%D7%9D/index.html",
+      "httpErr": "ok"
+    },
+    "budget": {
+      "http": null,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/wip-budget/index.html",
+      "httpErr": "contact"
+    },
+    "etrog-studio": {
+      "http": null,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/wip-etrog-studio/index.html",
+      "httpErr": "contact"
+    },
+    "digibook": {
+      "http": null,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/wip-digibook/index.html",
+      "httpErr": "contact"
+    },
+    "rct": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%91%D7%95%D7%A0%D7%94%20%D7%A4%D7%90%D7%A8%D7%A7%20%D7%A9%D7%A2%D7%A9%D7%95%D7%A2%D7%99%D7%9D/index.html",
+      "httpErr": "ok"
+    },
+    "polygraph": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%A4%D7%95%D7%9C%D7%99%D7%92%D7%A8%D7%A3%20%D7%93%D7%99%D7%92%D7%99%D7%98%D7%9C%D7%99/index.html",
+      "httpErr": "ok"
+    },
+    "patlasgames": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%A4%D7%98%D7%9C%D7%A1%20%D7%9E%D7%A9%D7%97%D7%A7%D7%99%D7%9D/index.html",
+      "httpErr": "ok"
+    },
+    "mahat": {
+      "http": null,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/wip-mahat/index.html",
+      "httpErr": "contact"
+    },
+    "shofar": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%A9%D7%95%D7%A4%D7%A8/index.html",
+      "httpErr": "ok"
+    },
+    "breath": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%A9%D7%96%D7%9D%20%D7%A0%D7%A9%D7%99%D7%9E%D7%95%D7%AA/next_gen_biometric_system.html",
+      "httpErr": "ok"
+    },
+    "phish": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%AA%D7%97%D7%A4%D7%A9%D7%A0%D7%99/index.html",
+      "httpErr": "ok"
+    },
+    "pizza": {
+      "http": 200,
+      "tier": "works",
+      "url": "https://storied-alfajores-6f10d2.netlify.app/%D7%A4%D7%99%D7%A6%D7%94/index.html",
+      "httpErr": "ok"
+    },
+    "recentfiles": {
+      "http": null,
+      "tier": "broken",
+      "url": "http://localhost:8082/recent-files.html",
+      "httpErr": "[WinError 10061] No connection could be "
+    }
+  }
+}

@@ -1,0 +1,4 @@
+.watch.pid
+סנכרון.log
+__pycache__/
+*.pyc

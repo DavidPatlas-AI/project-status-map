@@ -1,0 +1,38 @@
+מפת סטטוס פרויקטים — Patlas
+============================
+
+פתח.bat              → פותח את המפה בדפדפן
+רענן.bat             → בונה מחדש מ-portfolio.html + פותח
+פרסום.bat            → בונה + דוחף ל-GitHub + מפרסם ל-Netlify
+סנכרון אוטומטי.bat   → מאזין ל-portfolio.html, בונה אוטומטית (שלב 3)
+סנכרון+פרסום.bat     → כמו למעלה + פרסום Netlify אחרי כל שמירה
+הפעל בסטארטאפ.bat    → הפעלה אוטומטית עם Windows (ברקע, ללא חלון)
+בטל סטארטאפ.bat      → הסרה מ-Startup
+
+scripts/
+  build.py           → מייצר את הדף (קורא מ-Desktop\_לסקירה\portfolio.html)
+  watch.py           → סנכרון אוטומטי — --initial --deploy --debounce 2
+  status-state.json  → מצב URL אחרון (להתראות על פרויקטים שנשברו)
+  patch_portfolio.py → מוסיף קישור מפת סטטוס לתיק העבודות
+
+התראות שבור (שלב 4):
+  בדיקת URL מזהה HTTP 4xx/5xx וגם אתרים שלא נגישים
+  באנר אדום בראש הדף + תג "חדש!" לפרויקטים שנשברו מאז הבנייה הקודמת
+  status-state.json שומר מצב — הסנכרון האוטומטי כותב ל-סנכרון.log
+
+סנכרון אוטומטי (שלב 3):
+  1. הפעל סנכרון אוטומטי.bat (השאר את החלון פתוח)
+  2. ערוך ושמור את Desktop\_לסקירה\portfolio.html
+  3. אחרי ~2 שניות — המפה מתעדכנת אוטומטית
+  4. לפרסום ידני ל-Netlify: פרסום.bat
+  5. לפרסום אוטומטי: סנכרון+פרסום.bat (דורש git + netlify CLI)
+  6. לסנכרון תמידי: הפעל בסטארטאפ.bat → לוג ב-סנכרון.log
+     (launcher: %USERPROFILE%\status-watch-launch.ps1)
+
+גרסה חיה (אתר נכון בלבד):
+https://storied-alfajores-6f10d2.netlify.app/status-dashboard.html
+
+חשוב — פרסום Netlify:
+  תמיד מ-portfolio-git-temp, לא מתיקיית הבית
+  פרסום.bat בודק קישור ל-storied-alfajores לפני deploy
+  אסור: netlify deploy מתוך C:\Users\DAVID (יוצר אתר אקראי חדש)
