@@ -1,29 +1,28 @@
-# מפת סטטוס פרויקטים — Patlas Project Status Map
+<div align="center">
 
-לוח בקרה שבודק את הזמינות של כל האתרים בתיק העבודות ומציג באנר כשמשהו נשבר.
+# מפת סטטוס פרויקטים
 
-## עברית
+### Portfolio uptime status dashboard
 
-מפת HTML שסורקת את `portfolio.html` ובודקת עבור כל פרויקט אם ה-URL שלו מחזיר קוד HTTP תקין (200) או שגיאה (4xx/5xx). פרויקטים שנשברו מסומנים בבאנר אדום ובתג "חדש!".
+![Status](https://img.shields.io/badge/Status-Beta-eab308?style=flat-square)
+![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)
 
-**קבצים עיקריים:**
-- `מפת סטטוס פרויקטים.html` — הדשבורד עצמו
-- `scripts/build.py` — בונה את הדף מתוך portfolio.html
-- `scripts/watch.py` — סנכרון אוטומטי בזמן עריכה
-- `status-state.json` — מצב אחרון של כל פרויקט (לזיהוי שינויים)
+</div>
 
-**שימוש:** `פתח.bat` לפתיחה, `רענן.bat` לבנייה מחדש, `סנכרון אוטומטי.bat` להאזנה לשינויים.
+---
 
-## English
+## 🎯 מה זה
 
-A dashboard that scans all projects listed in `portfolio.html` and checks each project's live URL for HTTP errors (4xx/5xx) or unreachable sites. Broken projects get flagged with a red banner and a "new" badge since the last build.
+ לוח בקרה שסורק את כל הפרויקטים בתיק העבודות ובודק אם ה-URL של כל אחד מחזיר תגובה תקינה — פרויקטים שנשברו מסומנים מיידית באדום.
 
-**Key files:**
-- `מפת סטטוס פרויקטים.html` — the dashboard itself
-- `scripts/build.py` — builds the page from portfolio.html
-- `scripts/watch.py` — auto-rebuild on file changes
-- `status-state.json` — last known state per project (for change detection)
+## 🛠️ טכנולוגיה
 
-## License
+`Python` · `HTML5`
 
-MIT
+## 📦 הרצה
+
+פתח `מפת סטטוס פרויקטים.html` בדפדפן (אין צורך בשרת, אלא אם צוין אחרת).
+
+## 📄 רישיון
+
+MIT © 2026 [David Patlas](https://github.com/DavidPatlas-AI)
